@@ -2,6 +2,13 @@
   "name": "geoatlas-root",
   "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "packages/*",
+    "web",
+    "mobile",
+    "desktop",
+    "services/api"
+  ],
   "scripts": {
     "test": "jest --config tests/jest.config.js"
   },

@@ -1,0 +1,13 @@
+appId: org.geoatlas.desktop
+productName: GeoAtlas Desktop
+copyright: Copyright © 2026 GeoAtlas Open Data Platform
+directories:
+  output: dist-installer
+win:
+  target: nsis
+  icon: assets/icon.ico
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true

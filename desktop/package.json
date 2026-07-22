@@ -1,0 +1,21 @@
+{
+  "name": "geoatlas-desktop",
+  "version": "1.0.0",
+  "main": "dist/main.js",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "electron .",
+    "pack:win": "electron-builder --win"
+  },
+  "dependencies": {
+    "@geoatlas/core": "*",
+    "keytar": "^7.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "electron": "^29.1.5",
+    "electron-builder": "^24.13.3",
+    "typescript": "^5.4.3"
+  }
+}
