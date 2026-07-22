@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Compass, Search, GitCompare, ShieldCheck, PlusCircle, LogIn, LogOut, User, Globe, Palette, Trophy } from 'lucide-react';
+import { Compass, Search, GitCompare, ShieldCheck, PlusCircle, LogIn, LogOut, User, Globe, Palette, Trophy, Layers } from 'lucide-react';
 import { useSession } from '@/hooks/useSession';
 import { NotificationBell } from '@/components/notifications/NotificationBell';
 
@@ -16,6 +16,7 @@ export const Navbar: React.FC = () => {
     { label: 'Compare', href: '/compare', icon: GitCompare },
     { label: 'True Size', href: '/true-size', icon: Globe },
     { label: 'Map Creator', href: '/map-creator', icon: Palette },
+    { label: 'GIS Tools', href: '/gis-tools', icon: Layers },
     { label: 'Leaderboard', href: '/leaderboard', icon: Trophy },
     { label: 'Contribute', href: '/contribute', icon: PlusCircle },
   ];
@@ -32,7 +33,7 @@ export const Navbar: React.FC = () => {
           <span>GeoAtlas</span>
         </Link>
 
-        <nav className="flex items-center gap-1 sm:gap-3">
+        <nav className="flex items-center gap-1 sm:gap-2">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -54,7 +55,6 @@ export const Navbar: React.FC = () => {
         </nav>
 
         <div className="flex items-center gap-2">
-          {/* Notification Bell Feed */}
           <NotificationBell />
 
           {isAuthenticated && user ? (

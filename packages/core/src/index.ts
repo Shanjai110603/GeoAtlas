@@ -7,3 +7,5 @@ export * from './map-creator';
 export * from './import-export';
 export * from './gamification';
 export * from './notifications';
+export * from './gis-analytics';
+export * from './environmental';
