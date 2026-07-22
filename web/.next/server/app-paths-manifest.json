@@ -1,6 +1,6 @@
 {
+  "/page": "app/page.js",
   "/true-size/page": "app/true-size/page.js",
   "/search/page": "app/search/page.js",
-  "/compare/page": "app/compare/page.js",
-  "/page": "app/page.js"
+  "/compare/page": "app/compare/page.js"
 }
