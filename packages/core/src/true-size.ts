@@ -5,9 +5,13 @@ export interface GeoPolygon {
 
 export function computeGeodesicScaleFactor(originLat: number, targetLat: number): number {
   const rad = Math.PI / 180;
-  const cosOrigin = Math.cos(originLat * rad);
-  const cosTarget = Math.cos(targetLat * rad);
-  if (cosOrigin === 0) return 1;
+  // Clamp latitudes to Web Mercator bounds (-85.05 to +85.05)
+  const clampedOrigin = Math.max(-85.05, Math.min(85.05, originLat));
+  const clampedTarget = Math.max(-85.05, Math.min(85.05, targetLat));
+
+  const cosOrigin = Math.cos(clampedOrigin * rad);
+  const cosTarget = Math.cos(clampedTarget * rad);
+  if (Math.abs(cosOrigin) < 1e-6) return 1;
   return cosTarget / cosOrigin;
 }
 

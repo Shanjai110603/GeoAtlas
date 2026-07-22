@@ -17,8 +17,9 @@ export const resolvers = {
       };
     },
     searchEntities: async (_: any, { q, type }: { q: string; type?: string }) => {
-      const hits = await searchGeoAtlas(q, type);
-      return hits.map((hit: any) => ({
+      const searchRes = await searchGeoAtlas(q, type);
+      const items = Array.isArray(searchRes) ? searchRes : (searchRes?.hits || []);
+      return items.map((hit: any) => ({
         ...hit,
         attributes: JSON.stringify(hit.attributes || {}),
       }));
