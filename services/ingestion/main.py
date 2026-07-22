@@ -2,16 +2,16 @@ import sys
 import argparse
 import os
 
-# Add pipelines directory to Python path
+# Add pipelines directory to Python path for runtime execution
 sys.path.append(os.path.join(os.path.dirname(__file__), "pipelines"))
 
-from natural_earth import NaturalEarthPipeline
-from geoboundaries import GeoBoundariesPipeline
-from geonames import GeoNamesPipeline
-from osm_pbf import OSMPbfPipeline
-from osrm_build import OSRMBuildPipeline
-from wikidata import WikidataPipeline
-from worldbank import WorldBankPipeline
+from pipelines.natural_earth import NaturalEarthPipeline
+from pipelines.geoboundaries import GeoBoundariesPipeline
+from pipelines.geonames import GeoNamesPipeline
+from pipelines.osm_pbf import OSMPbfPipeline
+from pipelines.osrm_build import OSRMBuildPipeline
+from pipelines.wikidata import WikidataPipeline
+from pipelines.worldbank import WorldBankPipeline
 
 PIPELINES = {
     "natural_earth": NaturalEarthPipeline,
