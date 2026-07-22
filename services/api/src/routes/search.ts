@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 import { searchGeoAtlas } from '../services/search';
 
 export async function searchRoutes(fastify: FastifyInstance) {
-  fastify.get('/v1/search', async (request, reply) => {
+  fastify.get('/v1/search', async (request: any, reply: any) => {
     const { q, type, bbox } = request.query as { q?: string; type?: string; bbox?: string };
     if (!q) {
       return reply.code(400).send({ error: 'Missing required search query parameter "q"' });

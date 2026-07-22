@@ -56,7 +56,7 @@ export const resolvers = {
       }
       sql += ` LIMIT 50;`;
       const res = await query(sql, params);
-      return res.rows.map((row) => ({
+      return res.rows.map((row: any) => ({
         ...row,
         attributes: JSON.stringify(row.attributes),
       }));
@@ -72,7 +72,7 @@ export const resolvers = {
          ORDER BY r.created_at DESC;`,
         [parent.id]
       );
-      return res.rows.map((row) => ({
+      return res.rows.map((row: any) => ({
         ...row,
         photos: JSON.stringify(row.photos),
         created_at: row.created_at ? row.created_at.toISOString() : null,

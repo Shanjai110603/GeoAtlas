@@ -4,7 +4,7 @@ import { query } from '../db';
 
 export async function contributionRoutes(fastify: FastifyInstance) {
   // POST /v1/contributions - Submit edit/creation
-  fastify.post('/v1/contributions', async (request, reply) => {
+  fastify.post('/v1/contributions', async (request: any, reply: any) => {
     const { target_table, target_id, diff, source } = request.body as {
       target_table: string;
       target_id?: string;
@@ -27,7 +27,7 @@ export async function contributionRoutes(fastify: FastifyInstance) {
   });
 
   // GET /v1/contributions/:id/status
-  fastify.get('/v1/contributions/:id/status', async (request, reply) => {
+  fastify.get('/v1/contributions/:id/status', async (request: any, reply: any) => {
     const { id } = request.params as { id: string };
 
     const res = await query(`SELECT * FROM edit_history WHERE id = $1;`, [id]);
@@ -39,7 +39,7 @@ export async function contributionRoutes(fastify: FastifyInstance) {
   });
 
   // POST /v1/contributions/:id/review - Moderator approval/rejection
-  fastify.post('/v1/contributions/:id/review', async (request, reply) => {
+  fastify.post('/v1/contributions/:id/review', async (request: any, reply: any) => {
     const { id } = request.params as { id: string };
     const { action } = request.body as { action: 'approve' | 'reject' };
 

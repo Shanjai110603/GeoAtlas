@@ -4,7 +4,7 @@ import { getEntitiesInRadius } from '../services/gis';
 
 export async function entityRoutes(fastify: FastifyInstance) {
   // GET /v1/entities/:id
-  fastify.get('/v1/entities/:id', async (request, reply) => {
+  fastify.get('/v1/entities/:id', async (request: any, reply: any) => {
     const { id } = request.params as { id: string };
 
     const res = await query(
@@ -26,7 +26,7 @@ export async function entityRoutes(fastify: FastifyInstance) {
   });
 
   // GET /v1/entities?type=...&near=lat,lng&radius=...
-  fastify.get('/v1/entities', async (request, reply) => {
+  fastify.get('/v1/entities', async (request: any, reply: any) => {
     const { type, near, radius } = request.query as { type?: string; near?: string; radius?: string };
 
     if (near && radius) {

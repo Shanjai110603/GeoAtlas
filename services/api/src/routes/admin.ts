@@ -3,7 +3,7 @@ import { query } from '../db';
 
 export async function adminRoutes(fastify: FastifyInstance) {
   // GET /v1/admin/:id - Admin unit detail + children
-  fastify.get('/v1/admin/:id', async (request, reply) => {
+  fastify.get('/v1/admin/:id', async (request: any, reply: any) => {
     const { id } = request.params as { id: string };
 
     const adminRes = await query(
@@ -37,7 +37,7 @@ export async function adminRoutes(fastify: FastifyInstance) {
   });
 
   // GET /v1/admin/:id/hierarchy - Full ancestor chain using closure table
-  fastify.get('/v1/admin/:id/hierarchy', async (request, reply) => {
+  fastify.get('/v1/admin/:id/hierarchy', async (request: any, reply: any) => {
     const { id } = request.params as { id: string };
 
     const hierarchyRes = await query(

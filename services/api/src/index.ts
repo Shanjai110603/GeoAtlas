@@ -36,7 +36,7 @@ export async function buildApp() {
   await fastify.register(multipart, { limits: { fileSize: 10 * 1024 * 1024 } }); // 10MB limit
 
   // Auth Decorator
-  fastify.addHook('onRequest', async (request) => {
+  fastify.addHook('onRequest', async (request: any) => {
     try {
       await request.jwtVerify();
     } catch (err) {
@@ -70,9 +70,9 @@ export async function buildApp() {
   return fastify;
 }
 
-if (require.main === module) {
-  buildApp().then((server) => {
-    server.listen({ port: config.port, host: '0.0.0.0' }, (err, address) => {
+if (process.env.NODE_ENV !== 'test') {
+  buildApp().then((server: any) => {
+    server.listen({ port: config.port, host: '0.0.0.0' }, (err: any, address: string) => {
       if (err) {
         server.log.error(err);
         process.exit(1);

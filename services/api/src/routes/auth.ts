@@ -4,7 +4,7 @@ import { createUser, findUserByEmail, findUserById } from '../services/auth';
 
 export async function authRoutes(fastify: FastifyInstance) {
   // POST /v1/auth/signup
-  fastify.post('/v1/auth/signup', async (request, reply) => {
+  fastify.post('/v1/auth/signup', async (request: any, reply: any) => {
     const { email, password, display_name } = request.body as { email?: string; password?: string; display_name?: string };
     if (!email || !password || !display_name) {
       return reply.code(400).send({ error: 'Email, password, and display_name are required' });
@@ -23,7 +23,7 @@ export async function authRoutes(fastify: FastifyInstance) {
   });
 
   // POST /v1/auth/login
-  fastify.post('/v1/auth/login', async (request, reply) => {
+  fastify.post('/v1/auth/login', async (request: any, reply: any) => {
     const { email, password } = request.body as { email?: string; password?: string };
     if (!email || !password) {
       return reply.code(400).send({ error: 'Email and password are required' });
@@ -53,7 +53,7 @@ export async function authRoutes(fastify: FastifyInstance) {
   });
 
   // GET /v1/auth/me
-  fastify.get('/v1/auth/me', async (request, reply) => {
+  fastify.get('/v1/auth/me', async (request: any, reply: any) => {
     const decoded = (request as any).user;
     if (!decoded) {
       return reply.code(401).send({ error: 'Not authenticated' });

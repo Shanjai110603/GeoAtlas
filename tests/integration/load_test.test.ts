@@ -32,8 +32,8 @@ describe('High-Concurrency Load Testing (Search, Entity & Hierarchy Endpoints)',
     const responses = await Promise.all(requestPromises);
     const totalDuration = Date.now() - startTime;
 
-    const successfulResponses = responses.filter((res) => res.status === 200);
-    const failedResponses = responses.filter((res) => res.status !== 200);
+    const successfulResponses = responses.filter((res: any) => res.status === 200);
+    const failedResponses = responses.filter((res: any) => res.status !== 200);
 
     console.log(`[Load Test Benchmark] Executed ${concurrentRequestsCount} requests in ${totalDuration}ms.`);
     console.log(`[Load Test Success Rate] Success: ${successfulResponses.length}/${concurrentRequestsCount}, Failed: ${failedResponses.length}`);

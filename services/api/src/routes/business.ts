@@ -4,7 +4,7 @@ import { uploadImage } from '../services/storage';
 
 export async function businessRoutes(fastify: FastifyInstance) {
   // GET /v1/business/:id
-  fastify.get('/v1/business/:id', async (request, reply) => {
+  fastify.get('/v1/business/:id', async (request: any, reply: any) => {
     const { id } = request.params as { id: string };
 
     const bizRes = await query(
@@ -36,7 +36,7 @@ export async function businessRoutes(fastify: FastifyInstance) {
   });
 
   // POST /v1/business/:id/reviews
-  fastify.post('/v1/business/:id/reviews', async (request, reply) => {
+  fastify.post('/v1/business/:id/reviews', async (request: any, reply: any) => {
     const { id } = request.params as { id: string };
     const { rating, text, photos } = request.body as { rating: number; text: string; photos?: string[] };
 
@@ -61,7 +61,7 @@ export async function businessRoutes(fastify: FastifyInstance) {
   });
 
   // POST /v1/business/:id/photos - Upload photo to MinIO object storage
-  fastify.post('/v1/business/:id/photos', async (request, reply) => {
+  fastify.post('/v1/business/:id/photos', async (request: any, reply: any) => {
     const data = await request.file();
     if (!data) {
       return reply.code(400).send({ error: 'No file uploaded' });

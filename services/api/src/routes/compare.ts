@@ -3,7 +3,7 @@ import { query } from '../db';
 
 export async function compareRoutes(fastify: FastifyInstance) {
   // GET /v1/compare?ids=id1,id2
-  fastify.get('/v1/compare', async (request, reply) => {
+  fastify.get('/v1/compare', async (request: any, reply: any) => {
     const { ids } = request.query as { ids?: string };
     if (!ids) {
       return reply.code(400).send({ error: 'Missing required query parameter "ids" (comma-separated UUIDs)' });
@@ -25,7 +25,7 @@ export async function compareRoutes(fastify: FastifyInstance) {
   });
 
   // GET /v1/statistics/:admin_id?category=demographics|health
-  fastify.get('/v1/statistics/:admin_id', async (request, reply) => {
+  fastify.get('/v1/statistics/:admin_id', async (request: any, reply: any) => {
     const { admin_id } = request.params as { admin_id: string };
 
     const entityCounts = await query(
