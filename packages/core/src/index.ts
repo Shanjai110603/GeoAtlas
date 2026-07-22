@@ -9,3 +9,4 @@ export * from './gamification';
 export * from './notifications';
 export * from './gis-analytics';
 export * from './environmental';
+export * from './ai-engine';

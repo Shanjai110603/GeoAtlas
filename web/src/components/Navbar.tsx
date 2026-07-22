@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Compass, Search, GitCompare, ShieldCheck, PlusCircle, LogIn, LogOut, User, Globe, Palette, Trophy, Layers } from 'lucide-react';
+import { Compass, Search, GitCompare, ShieldCheck, PlusCircle, LogIn, LogOut, User, Globe, Palette, Trophy, Layers, Sparkles } from 'lucide-react';
 import { useSession } from '@/hooks/useSession';
 import { NotificationBell } from '@/components/notifications/NotificationBell';
 
@@ -17,6 +17,7 @@ export const Navbar: React.FC = () => {
     { label: 'True Size', href: '/true-size', icon: Globe },
     { label: 'Map Creator', href: '/map-creator', icon: Palette },
     { label: 'GIS Tools', href: '/gis-tools', icon: Layers },
+    { label: 'AI Assistant', href: '/ai-assistant', icon: Sparkles },
     { label: 'Leaderboard', href: '/leaderboard', icon: Trophy },
     { label: 'Contribute', href: '/contribute', icon: PlusCircle },
   ];
