@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Search, X, Filter } from 'lucide-react';
-import { Input } from '@/components/ui/Input';
 
 export interface SearchBarProps {
   initialQuery?: string;
   initialType?: string;
-  onSearch: (q: string, type?: string) => void;
+  onSearch?: (q: string, type?: string) => void;
   placeholder?: string;
 }
 
@@ -26,18 +26,31 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
   placeholder = 'Search places, admin units, hospitals, schools...',
 }) => {
+  const router = useRouter();
   const [q, setQ] = useState(initialQuery);
   const [selectedType, setSelectedType] = useState(initialType);
 
   useEffect(() => {
+    if (!onSearch) return;
     const timer = setTimeout(() => {
       onSearch(q, selectedType);
     }, 300);
     return () => clearTimeout(timer);
   }, [q, selectedType, onSearch]);
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (onSearch) {
+      onSearch(q, selectedType);
+    } else if (q.trim()) {
+      const params = new URLSearchParams({ q });
+      if (selectedType) params.append('type', selectedType);
+      router.push(`/search?${params.toString()}`);
+    }
+  };
+
   return (
-    <div className="w-full flex flex-col gap-3">
+    <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3">
       <div className="relative flex items-center w-full">
         <Search className="absolute left-3.5 text-slate-400 pointer-events-none" size={18} />
         <input
@@ -49,6 +62,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         />
         {q && (
           <button
+            type="button"
             onClick={() => setQ('')}
             className="absolute right-3.5 text-slate-400 hover:text-slate-200 transition-colors"
           >
@@ -65,8 +79,15 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           const isSelected = selectedType === t.id;
           return (
             <button
+              type="button"
               key={t.id}
-              onClick={() => setSelectedType(t.id)}
+              onClick={() => {
+                setSelectedType(t.id);
+                if (!onSearch && q.trim()) {
+                  const params = new URLSearchParams({ q, type: t.id });
+                  router.push(`/search?${params.toString()}`);
+                }
+              }}
               className={`px-3 py-1 rounded-full text-xs font-medium transition-all whitespace-nowrap border ${
                 isSelected
                   ? 'bg-blue-600/30 text-blue-300 border-blue-500/60'
@@ -78,6 +99,6 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           );
         })}
       </div>
-    </div>
+    </form>
   );
 };

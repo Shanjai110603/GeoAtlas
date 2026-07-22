@@ -34,7 +34,7 @@ export default async function HomePage() {
             </p>
 
             <div className="mt-2">
-              <SearchBar placeholder="Search any city, district, school, or hospital..." onSearch={() => {}} />
+              <SearchBar placeholder="Search any city, district, school, or hospital..." />
             </div>
           </div>
         </div>
