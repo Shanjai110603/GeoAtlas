@@ -97,6 +97,20 @@ export const DETAILED_COUNTRY_PRESETS: DetailedCountryPreset[] = [
       ]]
     }
   },
+  {
+    id: 'guatemala',
+    name: 'Guatemala',
+    continent: 'North America',
+    color: '#a855f7',
+    area_sq_km: 108889,
+    originCenter: [-90.2, 15.7],
+    geometry: {
+      type: 'Polygon',
+      coordinates: [[
+        [-92.2, 15.0], [-90.0, 17.8], [-89.1, 15.8], [-90.2, 13.7], [-92.2, 15.0]
+      ]]
+    }
+  },
 
   // --- SOUTH AMERICA ---
   {
@@ -175,6 +189,34 @@ export const DETAILED_COUNTRY_PRESETS: DetailedCountryPreset[] = [
       coordinates: [[
         [-70.3, -18.3], [-67.0, -23.0], [-69.5, -27.0], [-70.5, -34.0], [-73.0, -52.0],
         [-67.0, -55.0], [-75.0, -45.0], [-74.0, -38.0], [-70.3, -18.3]
+      ]]
+    }
+  },
+  {
+    id: 'venezuela',
+    name: 'Venezuela',
+    continent: 'South America',
+    color: '#10b981',
+    area_sq_km: 916445,
+    originCenter: [-66.5, 6.42],
+    geometry: {
+      type: 'Polygon',
+      coordinates: [[
+        [-73.3, 11.8], [-60.0, 8.5], [-60.7, 5.0], [-67.0, 1.2], [-73.0, 8.0], [-73.3, 11.8]
+      ]]
+    }
+  },
+  {
+    id: 'bolivia',
+    name: 'Bolivia',
+    continent: 'South America',
+    color: '#eab308',
+    area_sq_km: 1098581,
+    originCenter: [-63.5, -16.2],
+    geometry: {
+      type: 'Polygon',
+      coordinates: [[
+        [-69.5, -10.0], [-60.0, -14.0], [-57.5, -20.0], [-62.0, -22.5], [-69.5, -22.8], [-69.5, -10.0]
       ]]
     }
   },
@@ -273,47 +315,44 @@ export const DETAILED_COUNTRY_PRESETS: DetailedCountryPreset[] = [
     }
   },
   {
-    id: 'norway',
-    name: 'Norway',
+    id: 'poland',
+    name: 'Poland',
     continent: 'Europe',
-    color: '#38bdf8',
-    area_sq_km: 385207,
-    originCenter: [8.4, 60.4],
+    color: '#f43f5e',
+    area_sq_km: 312696,
+    originCenter: [19.1, 51.9],
     geometry: {
       type: 'Polygon',
       coordinates: [[
-        [4.6, 61.0], [5.0, 62.5], [11.5, 64.5], [16.0, 69.0], [31.0, 70.8],
-        [28.0, 70.0], [18.0, 68.0], [12.0, 63.0], [11.0, 59.0], [5.0, 58.0], [4.6, 61.0]
+        [14.1, 53.8], [18.8, 54.8], [23.5, 53.5], [24.0, 50.8], [19.0, 49.2], [14.8, 50.8], [14.1, 53.8]
       ]]
     }
   },
   {
-    id: 'sweden',
-    name: 'Sweden',
+    id: 'netherlands',
+    name: 'Netherlands',
     continent: 'Europe',
-    color: '#eab308',
-    area_sq_km: 450295,
-    originCenter: [18.6, 60.1],
+    color: '#f97316',
+    area_sq_km: 41543,
+    originCenter: [5.29, 52.1],
     geometry: {
       type: 'Polygon',
       coordinates: [[
-        [11.1, 58.9], [12.0, 63.0], [18.0, 68.0], [24.1, 65.8], [19.0, 63.0],
-        [16.0, 56.5], [12.5, 55.4], [11.1, 58.9]
+        [3.4, 51.4], [7.2, 53.4], [7.1, 51.8], [6.0, 50.8], [3.4, 51.4]
       ]]
     }
   },
   {
-    id: 'ukraine',
-    name: 'Ukraine',
+    id: 'greece',
+    name: 'Greece',
     continent: 'Europe',
     color: '#0284c7',
-    area_sq_km: 603628,
-    originCenter: [31.1, 48.3],
+    area_sq_km: 131957,
+    originCenter: [21.8, 39.0],
     geometry: {
       type: 'Polygon',
       coordinates: [[
-        [22.1, 48.4], [24.0, 51.5], [33.0, 52.3], [40.2, 49.3], [37.5, 47.0],
-        [33.5, 45.0], [29.5, 45.3], [26.0, 48.0], [22.1, 48.4]
+        [20.0, 39.5], [23.0, 41.5], [26.5, 41.5], [27.0, 38.0], [23.0, 35.0], [20.0, 39.5]
       ]]
     }
   },
@@ -403,17 +442,30 @@ export const DETAILED_COUNTRY_PRESETS: DetailedCountryPreset[] = [
     }
   },
   {
-    id: 'saudi_arabia',
-    name: 'Saudi Arabia',
-    continent: 'Asia',
-    color: '#14b8a6',
-    area_sq_km: 2149690,
-    originCenter: [45.0, 23.8],
+    id: 'turkey',
+    name: 'Turkey',
+    continent: 'Asia / Europe',
+    color: '#f43f5e',
+    area_sq_km: 783562,
+    originCenter: [35.2, 38.9],
     geometry: {
       type: 'Polygon',
       coordinates: [[
-        [34.5, 28.0], [39.0, 32.0], [48.0, 30.0], [50.0, 26.0], [55.5, 22.5],
-        [52.0, 19.0], [43.0, 16.5], [42.5, 12.6], [40.0, 19.0], [34.5, 28.0]
+        [26.0, 40.0], [30.0, 42.0], [42.0, 41.5], [44.5, 37.5], [36.0, 36.0], [27.0, 36.5], [26.0, 40.0]
+      ]]
+    }
+  },
+  {
+    id: 'thailand',
+    name: 'Thailand',
+    continent: 'Asia',
+    color: '#eab308',
+    area_sq_km: 513120,
+    originCenter: [100.9, 15.8],
+    geometry: {
+      type: 'Polygon',
+      coordinates: [[
+        [98.0, 19.5], [101.0, 20.0], [105.5, 15.0], [102.5, 11.5], [99.0, 6.5], [98.0, 10.0], [98.0, 19.5]
       ]]
     }
   },
@@ -463,30 +515,30 @@ export const DETAILED_COUNTRY_PRESETS: DetailedCountryPreset[] = [
     }
   },
   {
-    id: 'ethiopia',
-    name: 'Ethiopia',
+    id: 'kenya',
+    name: 'Kenya',
     continent: 'Africa',
-    color: '#a855f7',
-    area_sq_km: 1104300,
-    originCenter: [40.4, 9.14],
+    color: '#38bdf8',
+    area_sq_km: 580367,
+    originCenter: [37.9, -0.02],
     geometry: {
       type: 'Polygon',
       coordinates: [[
-        [33.0, 12.0], [38.0, 14.5], [42.0, 12.0], [47.8, 8.0], [42.0, 4.0], [34.0, 5.0], [33.0, 12.0]
+        [34.0, 4.5], [41.8, 3.9], [41.0, -1.6], [39.0, -4.7], [34.0, -1.0], [34.0, 4.5]
       ]]
     }
   },
   {
-    id: 'algeria',
-    name: 'Algeria',
+    id: 'morocco',
+    name: 'Morocco',
     continent: 'Africa',
-    color: '#eab308',
-    area_sq_km: 2381741,
-    originCenter: [1.65, 28.0],
+    color: '#ef4444',
+    area_sq_km: 446550,
+    originCenter: [-7.0, 31.7],
     geometry: {
       type: 'Polygon',
       coordinates: [[
-        [-8.6, 27.6], [-2.0, 35.0], [8.5, 37.0], [12.0, 30.0], [9.5, 23.5], [2.5, 19.0], [-8.6, 27.6]
+        [-13.0, 27.6], [-5.0, 36.0], [-1.0, 35.0], [-4.0, 31.0], [-13.0, 27.6]
       ]]
     }
   },
