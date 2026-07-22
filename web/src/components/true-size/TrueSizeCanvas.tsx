@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { OverlayItem } from './PolygonSelector';
-import { transformPolygonLatitude } from '@geoatlas/core';
+import { transformPolygonLatitude, computeGeodesicScaleFactor } from '@geoatlas/core';
 
 interface TrueSizeCanvasProps {
   overlays: OverlayItem[];
@@ -14,6 +14,12 @@ interface TrueSizeCanvasProps {
 export const TrueSizeCanvas: React.FC<TrueSizeCanvasProps> = ({ overlays, onUpdateOverlayCenter }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
+  const [activeHoverInfo, setActiveHoverInfo] = useState<{
+    name: string;
+    area_sq_km?: number;
+    lat: number;
+    scalePercent: number;
+  } | null>(null);
 
   // Active drag state ref
   const draggingState = useRef<{
@@ -32,7 +38,7 @@ export const TrueSizeCanvas: React.FC<TrueSizeCanvasProps> = ({ overlays, onUpda
     map.current = new maplibregl.Map({
       container: mapContainer.current,
       style: 'https://tiles.openfreemap.org/styles/bright',
-      center: [10, 25],
+      center: [10, 20],
       zoom: 2.2,
     });
 
@@ -62,6 +68,16 @@ export const TrueSizeCanvas: React.FC<TrueSizeCanvasProps> = ({ overlays, onUpda
         targetOv.originCenter,
         newCenter
       );
+
+      const scale = computeGeodesicScaleFactor(targetOv.originCenter[1], newCenter[1]);
+      const scalePercent = Math.round((1 / (scale * scale) - 1) * 100);
+
+      setActiveHoverInfo({
+        name: targetOv.name,
+        area_sq_km: targetOv.area_sq_km,
+        lat: Math.round(newCenter[1]),
+        scalePercent,
+      });
 
       const updatedData: any = {
         type: 'FeatureCollection',
@@ -156,7 +172,7 @@ export const TrueSizeCanvas: React.FC<TrueSizeCanvasProps> = ({ overlays, onUpda
             source: sourceId,
             paint: {
               'fill-color': ov.color,
-              'fill-opacity': 0.55,
+              'fill-opacity': 0.6,
             },
           });
 
@@ -188,7 +204,7 @@ export const TrueSizeCanvas: React.FC<TrueSizeCanvasProps> = ({ overlays, onUpda
             type: 'line',
             source: sourceId,
             paint: {
-              'line-color': ov.color,
+              'line-color': '#ffffff',
               'line-width': 2.5,
             },
           });
@@ -204,12 +220,40 @@ export const TrueSizeCanvas: React.FC<TrueSizeCanvasProps> = ({ overlays, onUpda
   }, [overlays]);
 
   return (
-    <div className="relative w-full h-full min-h-[580px] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
+    <div className="relative w-full h-full min-h-[600px] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
       <div ref={mapContainer} className="w-full h-full" />
-      <div className="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-800 text-[11px] text-slate-300 flex items-center gap-2 shadow-lg">
-        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-        <span>Click and drag country shapes directly on the map to compare true sizes!</span>
+
+      {/* Floating Instructions Header */}
+      <div className="absolute top-4 left-4 bg-slate-900/95 backdrop-blur-md px-4 py-2.5 rounded-xl border border-slate-800 text-xs text-slate-200 flex items-center gap-2.5 shadow-xl">
+        <span className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
+        <span className="font-semibold">
+          Click and drag any country shape directly across the map to compare true physical sizes!
+        </span>
       </div>
+
+      {/* Active Hover / Drag Metric Floating Panel */}
+      {activeHoverInfo && (
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-slate-700 shadow-2xl flex items-center gap-6 text-slate-100 animate-fade-in">
+          <div>
+            <div className="text-xs text-slate-400 font-medium">Selected Country</div>
+            <div className="text-sm font-bold text-cyan-400">{activeHoverInfo.name}</div>
+          </div>
+          {activeHoverInfo.area_sq_km && (
+            <div className="border-l border-slate-800 pl-4">
+              <div className="text-xs text-slate-400 font-medium">Actual Surface Area</div>
+              <div className="text-sm font-bold text-emerald-400 font-mono">
+                {activeHoverInfo.area_sq_km.toLocaleString()} sq km
+              </div>
+            </div>
+          )}
+          <div className="border-l border-slate-800 pl-4">
+            <div className="text-xs text-slate-400 font-medium">Mercator Scale Distortion</div>
+            <div className="text-sm font-bold text-amber-400 font-mono">
+              {activeHoverInfo.scalePercent >= 0 ? `+${activeHoverInfo.scalePercent}%` : `${activeHoverInfo.scalePercent}%`}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
