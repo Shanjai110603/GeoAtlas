@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Compass, Search, GitCompare, ShieldCheck, PlusCircle, LogIn, LogOut, User } from 'lucide-react';
+import { Compass, Search, GitCompare, ShieldCheck, PlusCircle, LogIn, LogOut, User, Globe, Palette } from 'lucide-react';
 import { useSession } from '@/hooks/useSession';
 
 export const Navbar: React.FC = () => {
@@ -13,6 +13,8 @@ export const Navbar: React.FC = () => {
   const navItems = [
     { label: 'Search', href: '/search', icon: Search },
     { label: 'Compare', href: '/compare', icon: GitCompare },
+    { label: 'True Size', href: '/true-size', icon: Globe },
+    { label: 'Map Creator', href: '/map-creator', icon: Palette },
     { label: 'Contribute', href: '/contribute', icon: PlusCircle },
   ];
 
