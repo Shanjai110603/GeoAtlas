@@ -58,6 +58,31 @@ services:
       - osrmdata:/data
     command: osrm-routed --algorithm mld /data/region.osrm
 
+  martin:
+    image: ghcr.io/maplibre/martin:v0.13.0
+    container_name: geoatlas_martin
+    environment:
+      DATABASE_URL: postgres://geoatlas:geoatlas_secret@postgres:5432/geoatlas
+    ports:
+      - "3001:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: geoatlas_web
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3000
+      NEXT_PUBLIC_TILE_URL: http://localhost:3001
+      NEXT_PUBLIC_MINIO_URL: http://localhost:9000
+    ports:
+      - "4000:3000"
+    depends_on:
+      - martin
+
 volumes:
   pgdata:
   meilidata:

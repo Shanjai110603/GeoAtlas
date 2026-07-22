@@ -25,9 +25,17 @@ export async function entityRoutes(fastify: FastifyInstance) {
     };
   });
 
-  // GET /v1/entities?type=...&near=lat,lng&radius=...
+  // GET /v1/entities?type=...&near=lat,lng&radius=...&sort=recent&limit=...
   fastify.get('/v1/entities', async (request: any, reply: any) => {
-    const { type, near, radius } = request.query as { type?: string; near?: string; radius?: string };
+    const { type, near, radius, sort, limit } = request.query as {
+      type?: string;
+      near?: string;
+      radius?: string;
+      sort?: string;
+      limit?: string;
+    };
+
+    const maxLimit = parseInt(limit || '50', 10);
 
     if (near && radius) {
       const [latStr, lngStr] = near.split(',');
@@ -37,7 +45,28 @@ export async function entityRoutes(fastify: FastifyInstance) {
 
       const items = await getEntitiesInRadius(lat, lng, radiusMeters, type);
       return {
-        entities: items,
+        entities: items.slice(0, maxLimit),
+        attribution: '© OpenStreetMap contributors / GeoNames / GeoAtlas Community (ODbL / CC-BY)',
+      };
+    }
+
+    if (sort === 'recent') {
+      let recentSql = `
+        SELECT e.id, e.entity_type, e.name, e.native_name, e.admin_level_id, e.attributes, e.confidence_score, e.source,
+               ST_AsGeoJSON(e.geom)::json AS geometry
+        FROM entities e
+      `;
+      const params: any[] = [];
+      if (type) {
+        recentSql += ` WHERE e.entity_type = $1`;
+        params.push(type);
+      }
+      recentSql += ` ORDER BY e.id DESC LIMIT $${params.length + 1};`;
+      params.push(maxLimit);
+
+      const dbRes = await query(recentSql, params);
+      return {
+        entities: dbRes.rows,
         attribution: '© OpenStreetMap contributors / GeoNames / GeoAtlas Community (ODbL / CC-BY)',
       };
     }
@@ -54,7 +83,8 @@ export async function entityRoutes(fastify: FastifyInstance) {
       params.push(type);
     }
 
-    sql += ` LIMIT 50;`;
+    sql += ` LIMIT $${params.length + 1};`;
+    params.push(maxLimit);
 
     const dbRes = await query(sql, params);
     return {

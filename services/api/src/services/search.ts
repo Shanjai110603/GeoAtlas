@@ -7,7 +7,13 @@ export const meili = new MeiliSearch({
   apiKey: config.meili.apiKey,
 });
 
-export async function searchGeoAtlas(q: string, type?: string, bbox?: string) {
+export async function searchGeoAtlas(
+  q: string,
+  type?: string,
+  bbox?: string,
+  limit: number = 20,
+  offset: number = 0
+): Promise<{ hits: any[]; totalHits: number }> {
   try {
     const index = meili.index('geoatlas_entities');
     const filter: string[] = [];
@@ -18,10 +24,14 @@ export async function searchGeoAtlas(q: string, type?: string, bbox?: string) {
 
     const searchRes = await index.search(q, {
       filter,
-      limit: 20,
+      limit,
+      offset,
     });
 
-    return searchRes.hits;
+    return {
+      hits: searchRes.hits,
+      totalHits: (searchRes as any).estimatedTotalHits || searchRes.hits.length,
+    };
   } catch (err) {
     // Database fallback search if Meilisearch service is starting up or unavailable
     let sql = `
@@ -31,18 +41,32 @@ export async function searchGeoAtlas(q: string, type?: string, bbox?: string) {
       WHERE name ILIKE $1 OR native_name ILIKE $1
     `;
     const params: any[] = [`%${q}%`];
+    let paramIndex = 2;
 
     if (type) {
-      sql += ` AND entity_type = $2`;
+      sql += ` AND entity_type = $${paramIndex}`;
       params.push(type);
+      paramIndex++;
     }
 
-    sql += ` LIMIT 20;`;
+    // Count total before limiting
+    const countSql = sql.replace(
+      /SELECT .+ FROM/,
+      'SELECT COUNT(*)::int as total FROM'
+    );
+    const countRes = await query(countSql, params);
+    const totalHits = countRes.rows[0]?.total || 0;
+
+    sql += ` ORDER BY name ASC LIMIT $${paramIndex} OFFSET $${paramIndex + 1};`;
+    params.push(limit, offset);
 
     const dbRes = await query(sql, params);
-    return dbRes.rows.map((row) => ({
-      ...row,
-      attribution: '© OpenStreetMap & GeoAtlas Community (ODbL / CC-BY-SA)',
-    }));
+    return {
+      hits: dbRes.rows.map((row) => ({
+        ...row,
+        attribution: '© OpenStreetMap & GeoAtlas Community (ODbL / CC-BY-SA)',
+      })),
+      totalHits,
+    };
   }
 }
