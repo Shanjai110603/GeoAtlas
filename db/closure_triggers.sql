@@ -20,7 +20,7 @@ BEGIN
 
   ELSIF (TG_OP = 'UPDATE') THEN
     -- Only re-parent if parent_id actually changed
-    IF IS DISTINCT FROM (OLD.parent_id, NEW.parent_id) THEN
+    IF OLD.parent_id IS DISTINCT FROM NEW.parent_id THEN
       -- Disconnect OLD ancestor links for NEW.id and all its descendants
       DELETE FROM admin_hierarchy_closure
       WHERE descendant_id IN (

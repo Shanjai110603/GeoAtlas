@@ -144,7 +144,7 @@ BEGIN
     RETURN NEW;
 
   ELSIF (TG_OP = 'UPDATE') THEN
-    IF IS DISTINCT FROM (OLD.parent_id, NEW.parent_id) THEN
+    IF OLD.parent_id IS DISTINCT FROM NEW.parent_id THEN
       DELETE FROM admin_hierarchy_closure
       WHERE descendant_id IN (
         SELECT descendant_id FROM admin_hierarchy_closure WHERE ancestor_id = OLD.id

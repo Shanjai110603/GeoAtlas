@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { query } from '../db';
-import { uploadImage } from '../services/storage';
+import { generatePresignedUploadUrl } from '../services/storage';
 
 export async function businessRoutes(fastify: FastifyInstance) {
   // GET /v1/business/:id
@@ -60,19 +60,24 @@ export async function businessRoutes(fastify: FastifyInstance) {
     });
   });
 
-  // POST /v1/business/:id/photos - Upload photo to MinIO object storage
-  fastify.post('/v1/business/:id/photos', async (request: any, reply: any) => {
-    const data = await request.file();
-    if (!data) {
-      return reply.code(400).send({ error: 'No file uploaded' });
+  // POST /v1/business/:id/photos/presign - Generate presigned upload URL for MinIO
+  fastify.post('/v1/business/:id/photos/presign', async (request: any, reply: any) => {
+    const { id } = request.params as { id: string };
+    const { filename, content_type } = request.body as { filename: string; content_type: string };
+
+    if (!filename || !content_type) {
+      return reply.code(400).send({ error: 'Missing filename or content_type in request body' });
     }
 
-    const buffer = await data.toBuffer();
-    const photoUrl = await uploadImage(data.filename, buffer, data.mimetype);
+    const { uploadUrl, fileUrl, key } = await generatePresignedUploadUrl(filename, content_type);
 
-    return reply.code(201).send({
-      message: 'Image uploaded successfully to object storage',
-      url: photoUrl,
+    return reply.code(200).send({
+      message: 'Upload directly to this presigned URL. Photo will be moderation-gated until parent review/entity is approved.',
+      upload_url: uploadUrl,
+      file_url: fileUrl,
+      object_key: key,
+      entity_id: id,
+      moderation_status: 'pending',
     });
   });
 }

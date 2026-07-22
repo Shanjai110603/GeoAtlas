@@ -20,6 +20,9 @@ import { businessRoutes } from './routes/business';
 import { contributionRoutes } from './routes/contributions';
 import { routeRoutes } from './routes/route';
 import { authRoutes } from './routes/auth';
+import { gisRoutes } from './routes/gis';
+import { statisticsRoutes } from './routes/statistics';
+import { attributionPlugin } from './plugins/attribution';
 
 export async function buildApp() {
   const fastify = Fastify({
@@ -44,6 +47,9 @@ export async function buildApp() {
     }
   });
 
+  // Attribution plugin (adds licensing headers to all responses)
+  await fastify.register(attributionPlugin);
+
   // REST Routes
   await fastify.register(searchRoutes);
   await fastify.register(geocodeRoutes);
@@ -54,6 +60,8 @@ export async function buildApp() {
   await fastify.register(contributionRoutes);
   await fastify.register(routeRoutes);
   await fastify.register(authRoutes);
+  await fastify.register(gisRoutes);
+  await fastify.register(statisticsRoutes);
 
   // Apollo GraphQL Server Setup
   const apolloServer = new ApolloServer({
