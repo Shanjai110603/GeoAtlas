@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Navbar } from '@/components/Navbar';
 import { ColorPalettePicker } from '@/components/map-creator/ColorPalettePicker';
 import { LegendEditor } from '@/components/map-creator/LegendEditor';
 import { MapExporter } from '@/components/map-creator/MapExporter';
@@ -43,8 +42,6 @@ export default function MapCreatorPage() {
 
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col font-sans">
-      <Navbar />
-
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-4 flex flex-col gap-6">
           <ColorPalettePicker

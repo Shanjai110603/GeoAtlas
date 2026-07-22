@@ -8,11 +8,13 @@ import { transformPolygonLatitude } from '@geoatlas/core';
 
 interface TrueSizeCanvasProps {
   overlays: OverlayItem[];
+  onUpdateOverlayCenter?: (id: string, newCenter: [number, number]) => void;
 }
 
-export const TrueSizeCanvas: React.FC<TrueSizeCanvasProps> = ({ overlays }) => {
+export const TrueSizeCanvas: React.FC<TrueSizeCanvasProps> = ({ overlays, onUpdateOverlayCenter }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
+  const markersRef = useRef<Record<string, maplibregl.Marker>>({});
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -20,43 +22,48 @@ export const TrueSizeCanvas: React.FC<TrueSizeCanvasProps> = ({ overlays }) => {
     map.current = new maplibregl.Map({
       container: mapContainer.current,
       style: 'https://tiles.openfreemap.org/styles/bright',
-      center: [20, 20],
+      center: [10, 20],
       zoom: 2,
     });
 
     map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
 
     return () => {
+      Object.values(markersRef.current).forEach((m) => m.remove());
+      markersRef.current = {};
       map.current?.remove();
     };
   }, []);
 
-  // Update map layers on overlay changes
+  // Update map layers and draggable markers whenever overlays change
   useEffect(() => {
     if (!map.current) return;
     const m = map.current;
 
-    const updateLayers = () => {
-      // Remove previous overlay sources/layers
-      const existingLayers = m.getStyle().layers || [];
-      existingLayers.forEach((layer) => {
-        if (layer.id.startsWith('truesize-layer-')) {
-          m.removeLayer(layer.id);
+    const renderOverlays = () => {
+      // Clean up markers for removed overlays
+      const currentOverlayIds = new Set(overlays.map((o) => o.id));
+      Object.keys(markersRef.current).forEach((id) => {
+        if (!currentOverlayIds.has(id)) {
+          markersRef.current[id].remove();
+          delete markersRef.current[id];
         }
       });
 
       overlays.forEach((ov) => {
+        if (!ov.geometry) return;
+
         const sourceId = `truesize-source-${ov.id}`;
         const fillLayerId = `truesize-layer-fill-${ov.id}`;
         const lineLayerId = `truesize-layer-line-${ov.id}`;
 
-        if (!ov.geometry) return;
+        const center = ov.currentCenter || ov.originCenter;
 
-        // Transform geometry for current map center
+        // Transform geometry for current position
         const transformedGeom = transformPolygonLatitude(
           ov.geometry,
-          [78.9629, 20.5937],
-          [m.getCenter().lng, m.getCenter().lat]
+          ov.originCenter,
+          center
         );
 
         const geojsonData: any = {
@@ -86,7 +93,7 @@ export const TrueSizeCanvas: React.FC<TrueSizeCanvasProps> = ({ overlays }) => {
             source: sourceId,
             paint: {
               'fill-color': ov.color,
-              'fill-opacity': 0.4,
+              'fill-opacity': 0.45,
             },
           });
         }
@@ -98,26 +105,71 @@ export const TrueSizeCanvas: React.FC<TrueSizeCanvasProps> = ({ overlays }) => {
             source: sourceId,
             paint: {
               'line-color': ov.color,
-              'line-width': 2,
+              'line-width': 2.5,
             },
           });
+        }
+
+        // Add or update Draggable Marker
+        if (!markersRef.current[ov.id]) {
+          const marker = new maplibregl.Marker({
+            draggable: true,
+            color: ov.color,
+          })
+            .setLngLat(center)
+            .addTo(m);
+
+          marker.on('drag', () => {
+            const lngLat = marker.getLngLat();
+            const updatedCenter: [number, number] = [lngLat.lng, lngLat.lat];
+            
+            // Re-transform polygon on drag
+            const realTimeGeom = transformPolygonLatitude(
+              ov.geometry,
+              ov.originCenter,
+              updatedCenter
+            );
+
+            const updatedData: any = {
+              type: 'FeatureCollection',
+              features: [
+                {
+                  type: 'Feature',
+                  geometry: realTimeGeom,
+                  properties: { name: ov.name },
+                },
+              ],
+            };
+
+            if (m.getSource(sourceId)) {
+              (m.getSource(sourceId) as maplibregl.GeoJSONSource).setData(updatedData);
+            }
+
+            if (onUpdateOverlayCenter) {
+              onUpdateOverlayCenter(ov.id, updatedCenter);
+            }
+          });
+
+          markersRef.current[ov.id] = marker;
+        } else {
+          markersRef.current[ov.id].setLngLat(center);
         }
       });
     };
 
     if (m.isStyleLoaded()) {
-      updateLayers();
+      renderOverlays();
     } else {
-      m.once('load', updateLayers);
+      m.once('load', renderOverlays);
     }
-  }, [overlays]);
+  }, [overlays, onUpdateOverlayCenter]);
 
   return (
-    <div className="relative w-full h-full min-h-[500px] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
+    <div className="relative w-full h-full min-h-[550px] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
       <div ref={mapContainer} className="w-full h-full" />
-      <div className="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-800 text-[11px] text-slate-300 flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-        Geodesic Distortion Scale Correction Active
+      <div className="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-800 text-[11px] text-slate-300 flex items-center gap-2">
+        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+        <span>Click and drag pin handles to compare true size across latitudes!</span>
       </div>
     </div>
   );

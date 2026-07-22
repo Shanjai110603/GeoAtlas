@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Navbar } from '@/components/Navbar';
 import { PolygonSelector, OverlayItem } from '@/components/true-size/PolygonSelector';
 import { TrueSizeCanvas } from '@/components/true-size/TrueSizeCanvas';
 
@@ -16,10 +15,14 @@ export default function TrueSizePage() {
     setOverlays((prev) => prev.filter((o) => o.id !== id));
   };
 
+  const handleUpdateOverlayCenter = (id: string, newCenter: [number, number]) => {
+    setOverlays((prev) =>
+      prev.map((o) => (o.id === id ? { ...o, currentCenter: newCenter } : o))
+    );
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col font-sans">
-      <Navbar />
-
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-4 flex flex-col gap-6">
           <PolygonSelector
@@ -30,7 +33,10 @@ export default function TrueSizePage() {
         </div>
 
         <div className="lg:col-span-8 h-[650px] lg:h-auto">
-          <TrueSizeCanvas overlays={overlays} />
+          <TrueSizeCanvas
+            overlays={overlays}
+            onUpdateOverlayCenter={handleUpdateOverlayCenter}
+          />
         </div>
       </main>
     </div>

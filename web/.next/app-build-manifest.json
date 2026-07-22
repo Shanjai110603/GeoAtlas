@@ -22,6 +22,12 @@
       "static/chunks/main-app.js",
       "static/css/app/search/page.css",
       "static/chunks/app/search/page.js"
+    ],
+    "/true-size/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/true-size/page.css",
+      "static/chunks/app/true-size/page.js"
     ]
   }
 }
