@@ -1,4 +1,4 @@
-# GeoAtlas — Master Product Requirements Document & Roadmap
+# GeoAtlas — Master Product Requirements Document, Reference Library & Roadmap
 
 ## 1. Project Vision
 
@@ -22,14 +22,21 @@ The long-term objective is to create the **"Wikipedia + GitHub + VS Code + ArcGI
 
 ---
 
-## 3. Primary Goals
+## 3. Positioning Matrix vs Existing Platforms
 
-1. Model every location on Earth across all administrative and physical levels.
-2. Support country-specific administrative hierarchies (e.g. India: State → District → Taluk → Panchayat → Village; Japan: Prefecture → Municipality → Ward; Germany: Bundesland → Kreis → Gemeinde).
-3. Provide structured geographic intelligence via connected Knowledge Graph nodes.
-4. Enable community contributions backed by a transparent trust and moderation framework.
-5. Provide open developer APIs, GIS spatial analysis tools, and multi-modal routing.
-6. Enable natural language AI querying over spatial and demographic metrics.
+| Capability | GeoAtlas | Google Maps | OpenStreetMap | Wikipedia | QGIS | MapChart | True Size Of |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Interactive Maps** | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
+| **Community Editing** | ✅ | Limited | ✅ | ✅ | ❌ | ❌ | ❌ |
+| **Geographic Knowledge Graph** | ✅ | Partial | Partial | Partial | ❌ | ❌ | ❌ |
+| **Administrative Hierarchy** | ✅ | Partial | ✅ | Partial | ✅ | ✅ | Countries only |
+| **GIS Analysis** | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
+| **AI Geographic Search** | ✅ | Limited | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **Custom Map Creation** | ✅ | Limited | ❌ | ❌ | Limited | ✅ | ❌ |
+| **Open APIs** | ✅ | Paid | Partial | Yes | Plugins | ❌ | ❌ |
+| **Offline / Self-hosting** | ✅ | ❌ | ✅ | Partial | ✅ | ❌ | ❌ |
+| **Community Reputation** | ✅ | ❌ | Partial | ✅ | ❌ | ❌ | ❌ |
+| **Open Source** | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ❌ |
 
 ---
 
@@ -53,90 +60,53 @@ Earth
 
 ---
 
-## 5. Geographic Knowledge Graph & Location Pages
+## 5. Curated Reference Library & Open Ecosystem
 
-Every entity maintains explicit spatial and structural relationships.
-
-### Example Graph Relationship:
-`Udumalpet` *(City)* → `belongs_to` → `Tiruppur District` → `belongs_to` → `Tamil Nadu` → `belongs_to` → `India`
-`Udumalpet` → `contains` → `Schools`, `Hospitals`, `Businesses`, `Roads`, `Postal Codes`, `Rivers`
-
-### Information Stored per Location:
-- **Identity**: Official name, Native names (e.g., அபோலோ / Noto Sans Tamil font support), Alternate names, Historical names.
-- **Geography**: Coordinates, Elevation, Surface area, Boundary geometry, Land cover, Climate classification.
-- **Demographics**: Population, Density, Growth rate, Languages, Literacy rates.
-- **Administrative**: Country code, Admin level number, Local term, Hierarchy closure tree.
-- **Infrastructure**: Roads, Airports, Ports, Railway stations, Transit stops.
-- **Public Services & Business**: Hospitals, Schools, Police stations, Businesses with ratings, reviews, and presigned storefront photos.
-- **History & Culture**: Historical timeline, Heritage markers, Local festivals.
-
----
-
-## 6. Trust, Moderation & Reputation Model
-
-### Trust Tier Model
-```text
-Official Government Data (Highest Confidence)
- └─ Verified Organizations (NGOs, Universities)
-     └─ Trusted Contributors (High reputation score)
-         └─ New Contributors (Requires Peer / Moderator Review)
-```
-
-### Verification & Auditability:
-Every edit tracks: `Source`, `Timestamp`, `Author ID`, `Version Diff`, `Confidence Score`.
-
-### Reputation System:
-- Contributors earn XP and unlock badges for accepted edits, photo uploads, reviews, and data validations.
-- Higher reputation unlocks trusted editor status, automated edit approvals, and moderator review rights.
-
----
-
-## 7. Open Data Sources & Attribution
-
-GeoAtlas prioritizes zero-cost open datasets:
-
-| Dataset | Purpose | License |
+### Open Geographic Data Sources
+| Dataset | Purpose | License / Link |
 |---|---|---|
-| **OpenStreetMap** | Roads, buildings, POIs, physical features | ODbL |
-| **GeoNames** | Place names, cities, alternate names | CC-BY 4.0 |
-| **Natural Earth** | Countries, coastlines, physical geography | Public Domain |
-| **geoBoundaries** | Authoritative administrative boundaries | CC-BY 4.0 |
-| **Wikidata** | Structured entity metadata & taxonomy | CC0 |
-| **World Bank / UN Data** | Economic & demographic indicators | CC-BY 4.0 |
-| **NASA / NOAA / OpenAQ** | Environmental, satellite, weather & AQI data | Open Data |
+| **OpenStreetMap** | Roads, POIs, buildings, physical features | [OpenStreetMap](https://www.openstreetmap.org) (ODbL) |
+| **GeoNames** | Cities, villages, place names | [GeoNames](https://www.geonames.org) (CC-BY 4.0) |
+| **Natural Earth** | Countries, coastlines, physical geography | [Natural Earth](https://www.naturalearthdata.com) (Public Domain) |
+| **geoBoundaries** | Authoritative administrative boundaries | [geoBoundaries](https://www.geoboundaries.org) (CC-BY 4.0) |
+| **Wikidata / Wikipedia** | Structured metadata & encyclopedic context | [Wikidata](https://www.wikidata.org) (CC0) / [Wikipedia](https://www.wikipedia.org) |
+| **OpenAddresses** | Street address datasets | [OpenAddresses](https://openaddresses.io) |
+
+### Statistics, Weather & Live Data
+- **Global Statistics**: [World Bank Data](https://data.worldbank.org), [Our World in Data](https://ourworldindata.org), [UN Data](https://data.un.org), [OECD Data](https://data.oecd.org)
+- **Weather & Environment**: [NASA Earthdata](https://www.earthdata.nasa.gov), [Copernicus](https://www.copernicus.eu), [NOAA](https://www.noaa.gov), [USGS](https://www.usgs.gov), [OpenAQ](https://openaq.org), [GBIF](https://www.gbif.org)
+- **Live Tracking & Remote Sensing**: [OpenSky Network](https://opensky-network.org), [USGS Earthquake Map](https://earthquake.usgs.gov), [MarineTraffic](https://www.marinetraffic.com)
+
+### Open GIS, Routing & Graphics Software
+- **Map Rendering**: [MapLibre GL JS](https://maplibre.org), [Leaflet](https://leafletjs.com), [OpenLayers](https://openlayers.org)
+- **GIS Engines & Spatial Analytics**: [QGIS](https://qgis.org), [GeoServer](https://geoserver.org), [PostGIS](https://postgis.net), [Turf.js](https://turfjs.org), [Uber H3](https://h3geo.org), [GDAL](https://gdal.org)
+- **Multi-Modal Routing**: [OSRM](https://project-osrm.org), [GraphHopper](https://www.graphhopper.com), [OpenTripPlanner](https://www.opentripplanner.org), [Valhalla](https://valhalla.github.io/valhalla)
+- **Community Editing**: [iD Editor](https://github.com/openstreetmap/iD), [StreetComplete](https://github.com/streetcomplete/StreetComplete), [JOSM](https://josm.openstreetmap.de)
+- **Photos & Street Imagery**: [Mapillary](https://www.mapillary.com), [Panoramax](https://panoramax.fr), [Wikimedia Commons](https://commons.wikimedia.org)
+
+### Research Foundations
+- **WorldKG**: *A World-Scale Geographic Knowledge Graph* ([arXiv:2109.10036](https://arxiv.org/abs/2109.10036))
+- **GeoVectors**: *Embeddings for global geographic entities linked to Wikidata* ([arXiv:2108.13092](https://arxiv.org/abs/2108.13092))
 
 ---
 
-## 8. Open-Source Projects to Learn From
-
-- **Mapping**: MapLibre GL JS, Leaflet, OpenLayers
-- **GIS**: QGIS, Turf.js, Uber H3
-- **Editing**: OpenStreetMap iD Editor, StreetComplete
-- **Routing**: OSRM, GraphHopper, OpenTripPlanner
-- **Knowledge**: Wikipedia, Wikidata, GeoNames
-- **Community & Data**: OpenStreetMap, Natural Earth, geoBoundaries, World Bank
-
----
-
-## 9. Modular Feature Breakdown (38 Modules) & Roadmap
-
-All platform capabilities are organized into 38 independent modules:
+## 6. Modular Feature Breakdown (38 Modules) & Roadmap
 
 ```text
-Phase 1–3 (Completed & Tested):
+Phases 1–3 (Completed & Tested):
  - Core PostGIS Spatial DB, Fastify REST & GraphQL API Engine
  - Next.js 14 SSR Web Client (MapLibre, Search, Compare, Moderation Queue)
  - Android Expo Native App (expo-secure-store, expo-sqlite 24h offline cache)
  - Windows Electron Native App (keytar Credential Manager, contextBridge IPC)
  - Shared @geoatlas/core Workspace Package
 
-Phase 4: Map Creator & True Size Tools (Modules 10, 11, 27)
- - True Size Mercator distortion correction overlay
- - MapChart style region painting & legend editor
- - Export PNG, SVG, PDF, GeoJSON, KML, GPX
+Phase 4 (Completed & Tested):
+ - True Size Mercator distortion correction overlay with direct map shape drag
+ - MapCreator Studio (region painting, legend editor, PNG/SVG/GeoJSON/CSV export)
+ - Import/Export Suite
 
 Phase 5: Gamification & Extended Community Features (Modules 6, 7, 29)
- - XP, level progression, badges, leaderboards
+ - XP, level progression, badges, leaderboards (inspired by Stack Overflow & Pokémon GO Wayfarer)
  - Push notification dispatch for edit approvals
 
 Phase 6: Advanced GIS & Environmental Analysis (Modules 12, 15, 16)
