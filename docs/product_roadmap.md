@@ -1,101 +1,153 @@
-# GeoAtlas — Master Modular Product Roadmap & Feature Inventory
+# GeoAtlas — Master Product Requirements Document & Roadmap
 
-This document serves as the formal Product Requirements Document (PRD) and Modular Roadmap for **GeoAtlas**: an open, structured, global geographic knowledge platform.
+## 1. Project Vision
 
----
+**GeoAtlas** is an **open-source, community-driven Geographic Intelligence Platform** that combines mapping, geographic knowledge, GIS analysis, collaboration, and AI into a single modular ecosystem.
 
-## Current Platform State (Phases 1–3 Complete)
+It is **not intended to compete directly with Google Maps or OpenStreetMap**, but rather to sit above them as a unified platform that integrates multiple open datasets into a structured **Geographic Knowledge Graph**.
 
-| Phase | Delivered Scope | Architecture / Package |
-|---|---|---|
-| **Phase 1 (Backend API)** | Multi-polygon admin levels, closure hierarchy, PostGIS spatial queries, OSRM routing, Meilisearch, presigned MinIO uploads, edit moderation engine. | `services/api` (Fastify + PostgreSQL 15/PostGIS 3.3) |
-| **Phase 2 (Web Client)** | Next.js 14 SSR location pages, MapLibre GL JS vector tiles (Martin), split search view, compare tool, statistics dashboards, business reviews, community edit submission & moderation queue. | `web/` |
-| **Phase 3 (Mobile & Desktop)** | Android native app (Expo / React Native) with `expo-secure-store` & SQLite 24h offline cache; Windows native app (Electron) with `keytar` Credential Manager integration; Shared `@geoatlas/core` workspace package. | `mobile/`, `desktop/`, `packages/core` |
+The long-term objective is to create the **"Wikipedia + GitHub + VS Code + ArcGIS + AI" for geography**, where every place on Earth can be explored, analyzed, edited, compared, and queried.
 
 ---
 
-## Modular Inventory & Strategic Grouping (38 Modules)
+## 2. Core Philosophy
 
-To maintain architectural stability and avoid monolithic bloat, all 450+ capabilities are categorized into 8 core functional pillars:
+- **Completely Open Source**: 100% open-source codebase with zero mandatory vendor lock-in or licensing costs.
+- **Community Driven**: Built for and powered by global contributors with peer review and moderation.
+- **BYOD (Bring Your Own Data) Friendly**: Easily connect custom GeoJSON, Shapefiles, or PostGIS databases.
+- **API First**: REST and GraphQL endpoints power Web, Mobile, Desktop, CLI, and third-party extensions.
+- **AI Native**: Built-in NLP query understanding, image OCR, automated duplicate detection, and translation.
+- **Privacy Respecting**: No user tracking or behavioral profiling; robust data security across all platforms.
+- **Modular & Extensible**: Modular plugin architecture so individual features evolve independently.
 
-```mermaid
-graph TD
-    subgraph GeoAtlas Platform Architecture
-        Core[Core Foundations: API, Spatial DB & Web/Mobile/Desktop Clients]
-        Core --> Pillars
-        subgraph Pillars
-            P1[1. Map & Visualization Engine]
-            P2[2. Search & Knowledge Graph]
-            P3[3. GIS, Routing & Analytics]
-            P4[4. Community, Moderation & Reputation]
-            P5[5. AI & Natural Language Assistance]
-            P6[6. Map Tools, True Size & Map Creator]
-            P7[7. Domain Intelligence: Weather, Traffic, Tourism, History]
-            P8[8. Developer Platform & Enterprise Workspaces]
-        end
-    end
+---
+
+## 3. Primary Goals
+
+1. Model every location on Earth across all administrative and physical levels.
+2. Support country-specific administrative hierarchies (e.g. India: State → District → Taluk → Panchayat → Village; Japan: Prefecture → Municipality → Ward; Germany: Bundesland → Kreis → Gemeinde).
+3. Provide structured geographic intelligence via connected Knowledge Graph nodes.
+4. Enable community contributions backed by a transparent trust and moderation framework.
+5. Provide open developer APIs, GIS spatial analysis tools, and multi-modal routing.
+6. Enable natural language AI querying over spatial and demographic metrics.
+
+---
+
+## 4. Scope of Geographic Coverage
+
+```text
+Earth
+ └─ Continents
+     └─ Subcontinents / Regions
+         └─ Countries
+             └─ States / Prefectures / Bundesländer
+                 └─ Counties / Districts / Kreise
+                     └─ Municipalities / Taluks / Tehsils
+                         └─ Cities / Towns / Panchayats / Villages
+                             └─ Neighborhoods / Wards
+                                 └─ Postal Codes
+                                     └─ Roads & Streets
+                                         └─ Buildings & POIs
+                                             └─ Businesses, Hospitals, Schools
 ```
 
 ---
 
-## 38-Module Capability Breakdown
+## 5. Geographic Knowledge Graph & Location Pages
 
-### Pillar 1: Map & Visualization Engine
-- **Module 1: Map & Visualization** (Interactive vector/raster, satellite, terrain, topo, 3D Globe, custom dark/light styles).
-- **Module 11: Map Creator** (MapChart style: region painting, legend builder, PNG/SVG/PDF export).
-- **Module 22: Photos & Media** (Storefront, 360°, drone imagery, street-level views).
-- **Module 33: Accessibility** (Screen readers, high contrast, keyboard navigation, colorblind modes).
+Every entity maintains explicit spatial and structural relationships.
 
-### Pillar 2: Geographic Hierarchy, Search & Knowledge Graph
-- **Module 2: Search Engine** (Fuzzy, spatial bbox, autocomplete, reverse geocoding, Plus Codes).
-- **Module 3: Geographic Hierarchy** (Earth → Continent → Region → Country → State → District → Taluk → Ward → Village → Postal → Street → Building).
-- **Module 4: Location Pages** (Comprehensive profiles: Identity, Geography, Demographics, Economy, Infrastructure, Healthcare, Education, Tourism, History).
-- **Module 24: Knowledge Graph** (Connected graph linking admin units, entities, businesses, statistics, and media).
-- **Module 25: Data Explorer** (Facet-based catalog for rivers, mountains, airports, schools, hospitals).
+### Example Graph Relationship:
+`Udumalpet` *(City)* → `belongs_to` → `Tiruppur District` → `belongs_to` → `Tamil Nadu` → `belongs_to` → `India`
+`Udumalpet` → `contains` → `Schools`, `Hospitals`, `Businesses`, `Roads`, `Postal Codes`, `Rivers`
 
-### Pillar 3: GIS, Routing, True Size & Spatial Analytics
-- **Module 10: True Size Engine** (Mercator projection distortion correction, interactive country/polygon comparison overlay).
-- **Module 12: GIS Tools** (Buffer, Union, Intersect, Clip, Dissolve, Distance, Area, Viewshed, Watershed).
-- **Module 13: Routing Engine** (Multi-modal OSRM routing: driving, walking, cycling, truck, isochrone reachability).
-- **Module 14: Spatial Analytics** (Dashboards, density heatmaps, land use, demographic distribution).
-- **Module 23: Global Statistics** (Aggregated population, GDP, climate, agriculture, energy, internet penetration).
-
-### Pillar 4: Community, Moderation, Reputation & Editing
-- **Module 5: Vector Map Editing** (Road editing, polygon drawing, snapping, split/merge, version history).
-- **Module 6: Community Contributions** (User edits, photo uploads, corrections, comments, place discussions).
-- **Module 7: Gamification & Reputation** (XP, levels, badges, regional/global leaderboards, trusted editor status).
-- **Module 28: Collaboration** (Shared workspace maps, team assignments, approval workflows).
-- **Module 29: Notifications** (Edit approval alerts, nearby change notifications, dataset updates).
-- **Module 30: Moderation System** (Diff viewer, rollback engine, trust-tier permissions, spam detection).
-
-### Pillar 5: AI & Natural Language Assistance (Deferred Phase Target)
-- **Module 8: AI Assistant** (Natural language geographic queries, map explanation, duplicate detection, image OCR, auto-summarization).
-
-### Pillar 6: Specialized Domain Modules
-- **Module 9: Side-by-Side Comparison** (Metric tables: area, population, GDP, HDI, climate).
-- **Module 15: Weather Intelligence** (Temperature, rain, AQI, radar overlays, climate normals).
-- **Module 16: Environment & Natural Hazards** (Deforestation, wildfires, floods, earthquakes, sea level).
-- **Module 17 & 19: Infrastructure & Public Services** (Road networks, transit, airports, hospitals, schools, police).
-- **Module 18: Business Directory** (Contact info, hours, verified attributes, reviews, presigned uploads).
-- **Module 20: Tourism & Culture** (Attractions, hiking trails, hotels, heritage sites).
-- **Module 21: Historical Geography** (Timeline slider, historical boundary changes, old names).
-
-### Pillar 7: Developer Platform, Data Management & Enterprise
-- **Module 26: Developer Platform** (REST, GraphQL, SDKs, Vector tile endpoints, Webhooks).
-- **Module 27: Import / Export** (GeoJSON, KML, GPX, Shapefile, TopoJSON, CSV, SVG, PDF).
-- **Module 34 & 35: Security & Enterprise** (RBAC, audit logs, private workspaces, self-hosting, SSO).
-- **Module 36: Plugin Ecosystem** (Custom map layers, routing adapters, analytics extensions).
-- **Module 37: Data Management Pipelines** (ETL pipelines, scheduled imports, provenance tracking, duplicate resolution).
-- **Module 38: Licensing & Attribution** (Automated source attribution for OSM/GeoNames/Wikidata, CC/ODbL license validation).
+### Information Stored per Location:
+- **Identity**: Official name, Native names (e.g., அபோலோ / Noto Sans Tamil font support), Alternate names, Historical names.
+- **Geography**: Coordinates, Elevation, Surface area, Boundary geometry, Land cover, Climate classification.
+- **Demographics**: Population, Density, Growth rate, Languages, Literacy rates.
+- **Administrative**: Country code, Admin level number, Local term, Hierarchy closure tree.
+- **Infrastructure**: Roads, Airports, Ports, Railway stations, Transit stops.
+- **Public Services & Business**: Hospitals, Schools, Police stations, Businesses with ratings, reviews, and presigned storefront photos.
+- **History & Culture**: Historical timeline, Heritage markers, Local festivals.
 
 ---
 
-## Future Phase Sequencing Roadmap
+## 6. Trust, Moderation & Reputation Model
+
+### Trust Tier Model
+```text
+Official Government Data (Highest Confidence)
+ └─ Verified Organizations (NGOs, Universities)
+     └─ Trusted Contributors (High reputation score)
+         └─ New Contributors (Requires Peer / Moderator Review)
+```
+
+### Verification & Auditability:
+Every edit tracks: `Source`, `Timestamp`, `Author ID`, `Version Diff`, `Confidence Score`.
+
+### Reputation System:
+- Contributors earn XP and unlock badges for accepted edits, photo uploads, reviews, and data validations.
+- Higher reputation unlocks trusted editor status, automated edit approvals, and moderator review rights.
+
+---
+
+## 7. Open Data Sources & Attribution
+
+GeoAtlas prioritizes zero-cost open datasets:
+
+| Dataset | Purpose | License |
+|---|---|---|
+| **OpenStreetMap** | Roads, buildings, POIs, physical features | ODbL |
+| **GeoNames** | Place names, cities, alternate names | CC-BY 4.0 |
+| **Natural Earth** | Countries, coastlines, physical geography | Public Domain |
+| **geoBoundaries** | Authoritative administrative boundaries | CC-BY 4.0 |
+| **Wikidata** | Structured entity metadata & taxonomy | CC0 |
+| **World Bank / UN Data** | Economic & demographic indicators | CC-BY 4.0 |
+| **NASA / NOAA / OpenAQ** | Environmental, satellite, weather & AQI data | Open Data |
+
+---
+
+## 8. Open-Source Projects to Learn From
+
+- **Mapping**: MapLibre GL JS, Leaflet, OpenLayers
+- **GIS**: QGIS, Turf.js, Uber H3
+- **Editing**: OpenStreetMap iD Editor, StreetComplete
+- **Routing**: OSRM, GraphHopper, OpenTripPlanner
+- **Knowledge**: Wikipedia, Wikidata, GeoNames
+- **Community & Data**: OpenStreetMap, Natural Earth, geoBoundaries, World Bank
+
+---
+
+## 9. Modular Feature Breakdown (38 Modules) & Roadmap
+
+All platform capabilities are organized into 38 independent modules:
 
 ```text
+Phase 1–3 (Completed & Tested):
+ - Core PostGIS Spatial DB, Fastify REST & GraphQL API Engine
+ - Next.js 14 SSR Web Client (MapLibre, Search, Compare, Moderation Queue)
+ - Android Expo Native App (expo-secure-store, expo-sqlite 24h offline cache)
+ - Windows Electron Native App (keytar Credential Manager, contextBridge IPC)
+ - Shared @geoatlas/core Workspace Package
+
 Phase 4: Map Creator & True Size Tools (Modules 10, 11, 27)
+ - True Size Mercator distortion correction overlay
+ - MapChart style region painting & legend editor
+ - Export PNG, SVG, PDF, GeoJSON, KML, GPX
+
 Phase 5: Gamification & Extended Community Features (Modules 6, 7, 29)
+ - XP, level progression, badges, leaderboards
+ - Push notification dispatch for edit approvals
+
 Phase 6: Advanced GIS & Environmental Analysis (Modules 12, 15, 16)
+ - Buffer, union, intersect, clip, dissolve, viewshed, watershed
+ - Live weather radar, AQI, wildfire/earthquake alerts
+
 Phase 7: AI Geographic Assistant & Natural Language Engine (Module 8)
+ - Natural language spatial querying ("Hospitals within 10 km")
+ - Image OCR & automated duplicate entity detection
+
 Phase 8: Enterprise Workspaces & Plugin Ecosystem (Modules 35, 36, 37)
+ - Private organization workspaces, SSO, audit logging
+ - Extensible plugin system & ETL pipeline scheduler
 ```
