@@ -63,13 +63,13 @@ export const MapExporter: React.FC<MapExporterProps> = ({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-        <Button variant="outline" size="sm" onClick={handleExportPNG} className="gap-1.5 text-xs">
+        <Button variant="secondary" size="sm" onClick={handleExportPNG} className="gap-1.5 text-xs">
           <ImageIcon className="w-3.5 h-3.5 text-emerald-400" /> Image (PNG)
         </Button>
-        <Button variant="outline" size="sm" onClick={handleExportGeoJSON} className="gap-1.5 text-xs">
+        <Button variant="secondary" size="sm" onClick={handleExportGeoJSON} className="gap-1.5 text-xs">
           <FileJson className="w-3.5 h-3.5 text-blue-400" /> GeoJSON
         </Button>
-        <Button variant="outline" size="sm" onClick={handleExportCSV} className="gap-1.5 text-xs">
+        <Button variant="secondary" size="sm" onClick={handleExportCSV} className="gap-1.5 text-xs">
           <FileSpreadsheet className="w-3.5 h-3.5 text-amber-400" /> CSV
         </Button>
       </div>

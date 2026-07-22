@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Navbar } from '@/components/layout/Navbar';
+import { Navbar } from '@/components/Navbar';
 import { ColorPalettePicker } from '@/components/map-creator/ColorPalettePicker';
 import { LegendEditor } from '@/components/map-creator/LegendEditor';
 import { MapExporter } from '@/components/map-creator/MapExporter';

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Navbar } from '@/components/layout/Navbar';
+import { Navbar } from '@/components/Navbar';
 import { PolygonSelector, OverlayItem } from '@/components/true-size/PolygonSelector';
 import { TrueSizeCanvas } from '@/components/true-size/TrueSizeCanvas';
 

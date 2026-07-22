@@ -58,7 +58,7 @@ export const LegendEditor: React.FC<LegendEditorProps> = ({
           <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
             Legend Key Categories
           </span>
-          <Button variant="outline" size="sm" onClick={onAddLegendItem} className="h-7 text-xs px-2 gap-1">
+          <Button variant="secondary" size="sm" onClick={onAddLegendItem} className="h-7 text-xs px-2 gap-1">
             <Plus className="w-3 h-3" /> Add Key
           </Button>
         </div>
