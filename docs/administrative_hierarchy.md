@@ -1,95 +1,170 @@
 # GeoAtlas — 12-Level Worldwide Geographic Hierarchy Model
 
-**Version:** 3.0 (with Indian Regional Languages & Global Native Scripts)
+**Version:** 4.0 (International & Regional Languages Specification)
 
-This document defines the complete **12-Level Geographic Knowledge Graph Hierarchy** for GeoAtlas, featuring **Indian Regional Languages (Hindi, Tamil, Telugu, Kannada, Malayalam, Bengali, Marathi, Gujarati)** and global native scripts.
-
----
-
-## 1. Indian Regional Language Administrative Mappings
-
-### 🇮🇳 1. Tamil (தமிழ்)
-- **மாநிலம் (State)**: Tamil Nadu (தமிழ்நாடு)
-- **மாவட்டம் (District)**: Chennai District (சென்னை மாவட்டம்)
-- **வட்டம் / தாலுகா (Taluk)**: Ambattur Taluk (அம்பத்தூர் வட்டம்)
-- **நகரம் / கிராமம் (City/Village)**: Chennai (சென்னை)
-- **வார்டு / பகுதி (Ward/Neighborhood)**: Anna Nagar (அண்ணா நகர்)
-- **அஞ்சல் குறியீடு (PIN Code)**: 600040
-- **தெரு / சாலை (Street/Road)**: 2nd Avenue (2வது அவென்யூ)
+This document defines the complete **12-Level Geographic Knowledge Graph Hierarchy** for GeoAtlas across International and Regional languages.
 
 ---
 
-### 🇮🇳 2. Hindi (हिन्दी)
-- **राज्य (State)**: Uttar Pradesh (उत्तर प्रदेश)
-- **जिला (District)**: Lucknow District (लखनऊ जिला)
-- **तहसील / तालुका (Tehsil/Taluk)**: Sadar Tehsil (सदर तहसील)
-- **नगर / गांव (City/Village)**: Lucknow (लखनऊ)
-- **वार्ड / मोहल्ला (Ward/Neighborhood)**: Hazratganj (हजरतगंज)
-- **पिन कोड (PIN Code)**: 226001
-- **सड़क (Street)**: MG Road (एमजी मार्ग)
+## 1. European Languages
+
+### 🇩🇪 German (de)
+- **Bundesland (State)**: Bayern
+- **Regierungsbezirk / Landkreis (District)**: Oberbayern
+- **Gemeindeverband (Sub-district)**: München Stadt
+- **Gemeinde / Stadt (City/Town)**: München
+- **Stadtteil / Ortsteil (Neighborhood)**: Schwabing
+- **Postleitzahl (PLZ)**: 80331
+- **Straße (Street)**: Leopoldstraße
+- **Gebäude & POI**: BMW Welt
 
 ---
 
-### 🇮🇳 3. Telugu (తెలుగు)
-- **రాష్ట్రం (State)**: Andhra Pradesh / Telangana (ఆంధ్రప్రదేశ్ / తెలంగాణ)
-- **జిల్లా (District)**: Visakhapatnam District (విశాఖపట్నం జిల్లా)
-- **మండలం / తాలూకా (Mandal/Taluk)**: Gajuwaka Mandal (గాజువాక మండలం)
-- **నగరం / గ్రామం (City/Village)**: Visakhapatnam (విశాఖపట్నం)
-- **వార్డు (Ward)**: Ward 12
-- **పిన్ కోడ్ (PIN Code)**: 530026
-- **వీధి / రోడ్డు (Street/Road)**: Beach Road (బీచ్ రోడ్డు)
+### 🇫🇷 French (fr)
+- **Région (State/Region)**: Île-de-France
+- **Département (District)**: Paris
+- **Arrondissement / Canton**: Paris 4e Arrondissement
+- **Commune (City/Town)**: Paris
+- **Quartier (Neighborhood)**: Le Marais
+- **Code Postal**: 75004
+- **Rue / Avenue (Street)**: Rue de Rivoli
+- **Bâtiment & POI**: Musée du Louvre
 
 ---
 
-### 🇮🇳 4. Kannada (ಕನ್ನಡ)
-- **ರಾಜ್ಯ (State)**: Karnataka (ಕರ್ನಾಟಕ)
-- **ಜಿಲ್ಲೆ (District)**: Bengaluru Urban (ಬೆಂಗಳೂರು ನಗರ)
-- **ತಾಲೂಕು (Taluk)**: Bengaluru South (ಬೆಂಗಳೂರು ದಕ್ಷಿಣ)
-- **ನಗರ / ಗ್ರಾಮ (City/Village)**: Bengaluru (ಬೆಂಗಳೂರು)
-- **ವಾರ್ಡ್ (Ward)**: Jayanagar (ಜಯನಗರ)
-- **ಅಂಚೆ ಸಂಕೇತ (PIN Code)**: 560041
-- **ರಸ್ತೆ / ಬೀದಿ (Road/Street)**: 4th Block Main Road
+### 🇪🇸 Spanish (es)
+- **Comunidad Autónoma (State)**: Cataluña
+- **Provincia (District)**: Barcelona
+- **Comarca / Municipio**: Barcelonès
+- **Municipio / Ciudad (City)**: Barcelona
+- **Barrio / Colonia (Neighborhood)**: Eixample
+- **Código Postal**: 08007
+- **Calle / Avenida (Street)**: Passeig de Gràcia
+- **Edificio & POI**: Sagrada Família
 
 ---
 
-### 🇮🇳 5. Malayalam (മലയാളം)
-- **സംസ്ഥാനം (State)**: Kerala (കേരളം)
-- **ജില്ല (District)**: Ernakulam (എറണാകുളം)
-- **താലൂക്ക് (Taluk)**: Kanayannur (കണയന്നൂർ)
-- **നഗരം / ഗ്രാമം (City/Village)**: Kochi (കൊച്ചി)
-- **വാർഡ് (Ward)**: Marine Drive Ward
-- **പിൻകോഡ് (PIN Code)**: 682031
-- **തെരുവ് / റോഡ് (Street/Road)**: MG Road Kochi
+### 🇮🇹 Italian (it)
+- **Regione (State)**: Lombardia
+- **Provincia (District)**: Milano
+- **Comune (City)**: Milano
+- **Quartiere (Neighborhood)**: Brera
+- **CAP (Postal Code)**: 20121
+- **Via / Corso (Street)**: Via Montenapoleone
+- **Edificio & POI**: Duomo di Milano
 
 ---
 
-### 🇮🇳 6. Bengali (বাংলা)
-- **রাজ্য (State)**: West Bengal (পশ্চিমবঙ্গ)
-- **জেলা (District)**: Kolkata District (কলকাতা জেলা)
-- **মহকুমা / উপজেলা (Upazila)**: Kolkata Municipal Sub-division
-- **শহর / গ্রাম (City/Village)**: Kolkata (কলকাতা)
-- **ওয়ার্ড (Ward)**: Salt Lake / Ward 42
-- **পিন কোড (PIN Code)**: 700091
-- **রাস্তা (Street)**: Park Street (পার্ক স্ট্রিট)
+### 🇷🇺 Russian (ru)
+- **Область / Край (Region)**: Московская область
+- **Район (District)**: Раменский район
+- **Город / Село (City)**: Москва
+- **Микрорайон / Kвартал (Neighborhood)**: Арбат
+- **Почтовый Индекс (Postal Code)**: 101000
+- **Улица / Проспект (Street)**: Тверская улица
+- **Здание & POI**: Государственный Исторический Музей
 
 ---
 
-### 🇮🇳 7. Marathi (मराठी)
-- **राज्य (State)**: Maharashtra (महाराष्ट्र)
-- **जिल्हा (District)**: Pune District (पुणे जिल्हा)
-- **तालुका (Taluk)**: Haveli Taluka (हवेली तालुका)
-- **शहर / गाव (City/Village)**: Pune (पुणे)
-- **प्रभाग / वार्ड (Ward)**: Kothrud (कोथरूड)
-- **पिन कोड (PIN Code)**: 411038
-- **रस्ता (Street)**: FC Road (एफसी रोड)
+## 2. Americas & Africa
+
+### 🇧🇷 Portuguese (pt-BR)
+- **Estado (State)**: São Paulo
+- **Mesorregião / Microrregião**: Metropolitana de São Paulo
+- **Município (City)**: São Paulo
+- **Bairro (Neighborhood)**: Jardins
+- **CEP (Postal Code)**: 01415-000
+- **Rua / Avenida (Street)**: Avenida Paulista
+- **Edifício & POI**: MASP Museum
 
 ---
 
-### 🇮🇳 8. Gujarati (ગુજરાતી)
-- **રાજ્ય (State)**: Gujarat (ગુજરાત)
-- **જિલ્લો (District)**: Ahmedabad District (અમદાવાદ જિલ્લો)
-- **તાલુકો (Taluk)**: Daskroi Taluka (દસક્રોઈ તાલુકો)
-- **શહેર / ગામ (City/Village)**: Ahmedabad (અમદાવાદ)
-- **વોર્ડ (Ward)**: Navrangpura (નવરંગપુરા)
-- **પિન કોડ (PIN Code)**: 380009
-- **શેરી / રસ્તો (Street/Road)**: CG Road (સીજી રોડ)
+### 🇸🇦 Arabic (ar)
+- **منطقة (Mintaqah / Region)**: منطقة الرياض
+- **محافظة (Muhafazah / Governorate)**: محافظة جدة
+- **مدينة / قرية (City/Village)**: مدينة جدة
+- **حي (Hayy / Neighborhood)**: حي الحمراء
+- **الرمز البريدي (Postal Code)**: 21577
+- **شارع / طريق (Street/Road)**: طريق الملك عبد العزيز
+
+---
+
+### 🇰🇪 Swahili (sw)
+- **Jimbo (State/Province)**: Mkoa wa Nairobi
+- **Wilaya (District)**: Wilaya ya Westlands
+- **Kata / Mtaa (Ward/Town)**: Parklands Ward
+- **Kijiji / Mtaa (Neighborhood)**: Mtaa wa Parklands
+- **Anwani ya Posta**: 00100
+- **Njia / Barabara (Street/Road)**: Barabara ya Waiyaki Way
+
+---
+
+## 3. Asian Languages
+
+### 🇨🇳 Chinese (zh-CN)
+- **省 / 自治区 (Province)**: 广东省 (Guangdong)
+- **地级市 (Prefecture)**: 广州市 (Guangzhou)
+- **县 / 区 (County/District)**: 天河区 (Tianhe District)
+- **乡 / 街道 (Sub-district)**: 林和街道
+- **村 / 社区 (Neighborhood)**: 社区 (Community)
+- **邮政编码 (Postal Code)**: 510000
+- **路 / 街 (Street)**: 天河路 (Tianhe Road)
+
+---
+
+### 🇯🇵 Japanese (ja)
+- **都道府県 (Prefecture)**: 東京都 (Tokyo)
+- **市区町村 (Municipality)**: 新宿区 (Shinjuku Ward)
+- **町 / 字 (District)**: 歌舞伎町 (Kabukichō)
+- **丁目 (Chōme)**: 1丁目
+- **郵便番号 (Postal Code)**: 160-0021
+- **街 / 番地 (Banchi)**: 1-19-1
+- **建物 & POI**: 新宿駅 (Shinjuku Station)
+
+---
+
+### 🇰🇷 Korean (ko)
+- **특별시 / 도 (Province)**: 서울특별시 (Seoul)
+- **시 / 군 / 구 (District)**: 강남구 (Gangnam-gu)
+- **읍 / 면 / 동 (Neighborhood)**: 역삼동 (Yeoksam-dong)
+- **우편번호 (Postal Code)**: 06164
+- **도로 (Street)**: 테헤란로 (Teheran-ro)
+- **건물 & POI**: COEX Mall
+
+---
+
+### 🇹🇭 Thai (th)
+- **จังหวัด (Province)**: กรุงเทพมหานคร (Bangkok)
+- **อำเภอ / เขต (District)**: เขตปทุมวัน (Pathum Wan)
+- **ตำบล / แขวง (Sub-district)**: แขวงลุมพินี (Lumphini)
+- **ซอย (Soi Sub-street)**: ซอยหลังสวน
+- **รหัสไปรษณีย์ (Postal Code)**: 10330
+- **ถนน (Street)**: ถนนสุขุมวิท (Sukhumvit Road)
+
+---
+
+## 4. Indian Regional Languages
+
+### 🇮🇳 Tamil (ta)
+- **மாநிலம் (State)** -> **மாவட்டம் (District)** -> **வட்டம் (Taluk)** -> **நகரம் (City)** -> **வார்டு (Ward)** -> **அஞ்சல் குறியீடு (PIN Code)** -> **தெரு (Street)**
+
+### 🇮🇳 Hindi (hi)
+- **राज्य (State)** -> **जिला (District)** -> **तहसील (Tehsil)** -> **नगर (City)** -> **वार्ड (Ward)** -> **पिन कोड (PIN Code)** -> **सड़क (Street)**
+
+### 🇮🇳 Telugu (te)
+- **రాష్ట్రం (State)** -> **జిల్లా (District)** -> **మండలం (Mandal)** -> **నగరం (City)** -> **వార్డు (Ward)** -> **పిన్ కోడ్ (PIN Code)** -> **వీధి (Street)**
+
+### 🇮🇳 Kannada (kn)
+- **ರಾಜ್ಯ (State)** -> **ಜಿಲ್ಲೆ (District)** -> **ತಾಲೂಕು (Taluk)** -> **ನಗರ (City)** -> **ವಾರ್ಡ್ (Ward)** -> **ಅಂಚೆ ಸಂಕೇತ (PIN Code)** -> **ರಸ್ತೆ (Road)**
+
+### 🇮🇳 Malayalam (ml)
+- **സംസ്ഥാനം (State)** -> **ജില്ല (District)** -> **താലൂക്ക് (Taluk)** -> **നഗരം (City)** -> **വാർഡ് (Ward)** -> **പിൻകോഡ് (PIN Code)** -> **തെരുവ് (Street)**
+
+### 🇮🇳 Bengali (bn)
+- **রাজ্য (State)** -> **জেলা (District)** -> **উপজেলা (Upazila)** -> **শহর (City)** -> **ওয়ার্ড (Ward)** -> **পিন কোড (PIN Code)** -> **রাস্তা (Street)**
+
+### 🇮🇳 Marathi (mr)
+- **राज्य (State)** -> **जिल्हा (District)** -> **तालुका (Taluk)** -> **शहर (City)** -> **वार्ड (Ward)** -> **पिन कोड (PIN Code)** -> **रस्ता (Street)**
+
+### 🇮🇳 Gujarati (gu)
+- **રાજ્ય (State)** -> **જિલ્લો (District)** -> **તાલુકો (Taluk)** -> **શહેર (City)** -> **વોર્ડ (Ward)** -> **પિન કોડ (PIN Code)** -> **શેરી (Street)**
