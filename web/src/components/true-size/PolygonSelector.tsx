@@ -76,8 +76,32 @@ export const PolygonSelector: React.FC<PolygonSelectorProps> = ({
     }
   };
 
-  const handleAddPreset = (preset: DetailedCountryPreset) => {
+  const handleAddPreset = async (preset: DetailedCountryPreset) => {
     const color = COLOR_PALETTE[overlays.length % COLOR_PALETTE.length];
+
+    // Query Phase 1 PostGIS DB API for 100% exact official Natural Earth / geoBoundaries MultiPolygon geometry
+    try {
+      const searchRes = await apiClient.searchPlaces(preset.name, undefined, undefined, 1);
+      if (searchRes.results && searchRes.results.length > 0) {
+        const detail = await apiClient.getAdminUnit(searchRes.results[0].id);
+        if (detail.admin_unit && detail.admin_unit.geometry) {
+          onAddOverlay({
+            id: `${preset.id}_${Date.now()}`,
+            name: detail.admin_unit.name || preset.name,
+            color,
+            geometry: detail.admin_unit.geometry,
+            area_sq_km: detail.admin_unit.area_sq_km || preset.area_sq_km,
+            originCenter: [...preset.originCenter] as [number, number],
+            currentCenter: [...preset.originCenter] as [number, number],
+          });
+          return;
+        }
+      }
+    } catch (_) {
+      // PostGIS API fallback
+    }
+
+    // High-precision embedded preset geometry fallback
     onAddOverlay({
       id: `${preset.id}_${Date.now()}`,
       name: preset.name,
