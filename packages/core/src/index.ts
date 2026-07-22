@@ -13,3 +13,4 @@ export * from './ai-engine';
 export * from './enterprise';
 export * from './plugins';
 export * from './developer-api';
+export * from './hierarchy-model';
