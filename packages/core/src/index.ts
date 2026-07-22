@@ -5,3 +5,5 @@ export * from './schemas';
 export * from './true-size';
 export * from './map-creator';
 export * from './import-export';
+export * from './gamification';
+export * from './notifications';

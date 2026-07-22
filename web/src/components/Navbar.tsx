@@ -3,8 +3,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Compass, Search, GitCompare, ShieldCheck, PlusCircle, LogIn, LogOut, User, Globe, Palette } from 'lucide-react';
+import { Compass, Search, GitCompare, ShieldCheck, PlusCircle, LogIn, LogOut, User, Globe, Palette, Trophy } from 'lucide-react';
 import { useSession } from '@/hooks/useSession';
+import { NotificationBell } from '@/components/notifications/NotificationBell';
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
@@ -15,6 +16,7 @@ export const Navbar: React.FC = () => {
     { label: 'Compare', href: '/compare', icon: GitCompare },
     { label: 'True Size', href: '/true-size', icon: Globe },
     { label: 'Map Creator', href: '/map-creator', icon: Palette },
+    { label: 'Leaderboard', href: '/leaderboard', icon: Trophy },
     { label: 'Contribute', href: '/contribute', icon: PlusCircle },
   ];
 
@@ -30,7 +32,7 @@ export const Navbar: React.FC = () => {
           <span>GeoAtlas</span>
         </Link>
 
-        <nav className="flex items-center gap-1 sm:gap-4">
+        <nav className="flex items-center gap-1 sm:gap-3">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -51,13 +53,19 @@ export const Navbar: React.FC = () => {
           })}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          {/* Notification Bell Feed */}
+          <NotificationBell />
+
           {isAuthenticated && user ? (
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-medium text-slate-400 hidden md:inline-flex items-center gap-1 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800">
-                <User size={12} className="text-blue-400" />
-                {user.display_name}
-              </span>
+            <div className="flex items-center gap-2">
+              <Link
+                href="/profile"
+                className="text-xs font-medium text-slate-200 flex items-center gap-1 bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-800 transition"
+              >
+                <User size={14} className="text-blue-400" />
+                <span className="hidden md:inline">{user.display_name}</span>
+              </Link>
               <button
                 onClick={() => logout()}
                 className="p-2 text-slate-400 hover:text-slate-100 hover:bg-slate-900 rounded-xl transition-all"
