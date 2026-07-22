@@ -1,4 +1,5 @@
-import { S3Client, PutObjectCommand, CreateBucketCommand, HeadBucketCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, CreateBucketCommand, HeadBucketCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { config } from '../config';
 
 export const s3Client = new S3Client({
@@ -8,7 +9,7 @@ export const s3Client = new S3Client({
     accessKeyId: config.storage.accessKey,
     secretAccessKey: config.storage.secretKey,
   },
-  forcePathStyle: true, // Needed for MinIO
+  forcePathStyle: true, // MinIO requirement
 });
 
 export async function ensureBucketExists(): Promise<void> {
@@ -19,6 +20,21 @@ export async function ensureBucketExists(): Promise<void> {
       await s3Client.send(new CreateBucketCommand({ Bucket: config.storage.bucket }));
     }
   }
+}
+
+export async function generatePresignedUploadUrl(filename: string, contentType: string): Promise<{ uploadUrl: string; fileUrl: string; key: string }> {
+  await ensureBucketExists();
+  const key = `uploads/${Date.now()}-${filename}`;
+  const command = new PutObjectCommand({
+    Bucket: config.storage.bucket,
+    Key: key,
+    ContentType: contentType,
+  });
+
+  const uploadUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+  const fileUrl = `${config.storage.endpoint}/${config.storage.bucket}/${key}`;
+
+  return { uploadUrl, fileUrl, key };
 }
 
 export async function uploadImage(filename: string, body: Buffer, contentType: string): Promise<string> {

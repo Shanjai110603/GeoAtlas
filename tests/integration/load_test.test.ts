@@ -13,7 +13,7 @@ describe('High-Concurrency Load Testing (Search, Entity & Hierarchy Endpoints)',
     if (app) await app.close();
   });
 
-  it('should handle 100 concurrent requests across search, entity, and hierarchy endpoints within 1000ms', async () => {
+  it('should handle 100 concurrent requests measuring p50/p95 latency and sustained RPS', async () => {
     const concurrentRequestsCount = 100;
     const endpoints = [
       '/v1/search?q=Apollo',
@@ -22,23 +22,39 @@ describe('High-Concurrency Load Testing (Search, Entity & Hierarchy Endpoints)',
       '/v1/route?from=13.0827,80.2707&to=13.0607,80.2512',
     ];
 
+    const latencies: number[] = [];
     const startTime = Date.now();
 
-    const requestPromises = Array.from({ length: concurrentRequestsCount }).map((_, idx) => {
+    const requestPromises = Array.from({ length: concurrentRequestsCount }).map(async (_, idx) => {
       const targetEndpoint = endpoints[idx % endpoints.length];
-      return supertest(app.server).get(targetEndpoint);
+      const reqStart = Date.now();
+      const res = await supertest(app.server).get(targetEndpoint);
+      const reqDuration = Date.now() - reqStart;
+      latencies.push(reqDuration);
+      return res;
     });
 
     const responses = await Promise.all(requestPromises);
-    const totalDuration = Date.now() - startTime;
+    const totalDurationMs = Date.now() - startTime;
+
+    latencies.sort((a, b) => a - b);
+    const p50 = latencies[Math.floor(latencies.length * 0.5)];
+    const p95 = latencies[Math.floor(latencies.length * 0.95)];
+    const rps = Math.round((concurrentRequestsCount / totalDurationMs) * 1000);
 
     const successfulResponses = responses.filter((res: any) => res.status === 200);
     const failedResponses = responses.filter((res: any) => res.status !== 200);
 
-    console.log(`[Load Test Benchmark] Executed ${concurrentRequestsCount} requests in ${totalDuration}ms.`);
-    console.log(`[Load Test Success Rate] Success: ${successfulResponses.length}/${concurrentRequestsCount}, Failed: ${failedResponses.length}`);
+    console.log(`\n================ Load Test Benchmark Baseline ================`);
+    console.log(`Total Concurrent Requests: ${concurrentRequestsCount}`);
+    console.log(`Total Duration: ${totalDurationMs}ms`);
+    console.log(`Sustained Throughput: ${rps} RPS`);
+    console.log(`p50 Latency: ${p50}ms`);
+    console.log(`p95 Latency: ${p95}ms`);
+    console.log(`Success Count: ${successfulResponses.length}/${concurrentRequestsCount}`);
+    console.log(`=============================================================\n`);
 
     expect(successfulResponses.length).toBe(concurrentRequestsCount);
-    expect(totalDuration).toBeLessThan(5000); // Must complete under load in under 5 seconds
+    expect(p95).toBeLessThan(1000); // Baseline p95 latency under 1 second
   });
 });

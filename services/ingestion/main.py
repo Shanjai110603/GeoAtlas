@@ -9,7 +9,7 @@ from natural_earth import NaturalEarthPipeline
 from geoboundaries import GeoBoundariesPipeline
 from geonames import GeoNamesPipeline
 from osm_pbf import OSMPbfPipeline
-from osrm_preprocessor import OSRMPreprocessorPipeline
+from osrm_build import OSRMBuildPipeline
 from wikidata import WikidataPipeline
 from worldbank import WorldBankPipeline
 
@@ -18,7 +18,7 @@ PIPELINES = {
     "geoboundaries": GeoBoundariesPipeline,
     "geonames": GeoNamesPipeline,
     "osm": OSMPbfPipeline,
-    "osrm_prep": OSRMPreprocessorPipeline,
+    "osrm_build": OSRMBuildPipeline,
     "wikidata": WikidataPipeline,
     "worldbank": WorldBankPipeline
 }
@@ -29,7 +29,7 @@ def main():
     args = parser.parse_args()
 
     if args.source == "all":
-        print("Running all GeoAtlas ingestion pipelines sequentially...")
+        print("Running all GeoAtlas ingestion & OSRM build pipelines sequentially...")
         for name, pipeline_cls in PIPELINES.items():
             print(f"\n================ Running Pipeline: {name} ================")
             p = pipeline_cls()
