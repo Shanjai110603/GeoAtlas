@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Compass, Search, GitCompare, ShieldCheck, PlusCircle, LogIn, LogOut, User, Globe, Palette, Trophy, Layers, Sparkles } from 'lucide-react';
+import { Compass, Search, GitCompare, ShieldCheck, PlusCircle, LogIn, LogOut, User, Globe, Palette, Trophy, Layers, Sparkles, Building2, Puzzle, Code2 } from 'lucide-react';
 import { useSession } from '@/hooks/useSession';
 import { NotificationBell } from '@/components/notifications/NotificationBell';
 
@@ -18,6 +18,9 @@ export const Navbar: React.FC = () => {
     { label: 'Map Creator', href: '/map-creator', icon: Palette },
     { label: 'GIS Tools', href: '/gis-tools', icon: Layers },
     { label: 'AI Assistant', href: '/ai-assistant', icon: Sparkles },
+    { label: 'Workspace', href: '/workspace', icon: Building2 },
+    { label: 'Plugins', href: '/plugins', icon: Puzzle },
+    { label: 'Developer', href: '/developer', icon: Code2 },
     { label: 'Leaderboard', href: '/leaderboard', icon: Trophy },
     { label: 'Contribute', href: '/contribute', icon: PlusCircle },
   ];
@@ -34,7 +37,7 @@ export const Navbar: React.FC = () => {
           <span>GeoAtlas</span>
         </Link>
 
-        <nav className="flex items-center gap-1 sm:gap-2">
+        <nav className="flex items-center gap-1 sm:gap-2 overflow-x-auto py-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -42,20 +45,20 @@ export const Navbar: React.FC = () => {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all shrink-0 ${
                   isActive
                     ? 'bg-blue-600/20 text-blue-400 border border-blue-500/30'
                     : 'text-slate-300 hover:text-slate-100 hover:bg-slate-900'
                 }`}
               >
-                <Icon size={16} />
+                <Icon size={14} />
                 <span className="hidden sm:inline">{item.label}</span>
               </Link>
             );
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <NotificationBell />
 
           {isAuthenticated && user ? (
